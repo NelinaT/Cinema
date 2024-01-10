@@ -59,10 +59,4 @@ def logout(request):
 def agenda(request):
     return render (request, "customer/agenda.html")
 
-
-
-# def creat_hall(request):
-#     if request.method == "POST":
-#         if request.hall.name == "VIP"
-#             row = 
     
