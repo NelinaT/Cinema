@@ -1,0 +1,15 @@
+<html>
+    <head>
+        {% load bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+    </head>
+    <body>
+        {% block content %}
+        {% for projection in projections %}
+        <h1>{{projection.Hall.name}}</h1>
+        {% endfor %}
+        {%endblock%}
+        
+    </body>
+</html>

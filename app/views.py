@@ -5,13 +5,16 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from . models import Movie, Hall
+from . models import Movie, Hall, Projection
 from  django.contrib.auth.models import User
 
 def index(request):
     Movies = Movie.objects.all()
-    context = {"movies": Movies}
-    return render (request, "common/index.html", context=context)
+    return render(
+        request,
+        "common/index.html",
+        context={"movies": Movies}
+    )
 
 def login(request):
     form = LoginForm()
@@ -57,6 +60,20 @@ def logout(request):
 
 @login_required(login_url="../login")
 def agenda(request):
-    return render (request, "customer/agenda.html")
+    return render (
+        request,
+        "customer/agenda.html"
+    )
 
-    
+@login_required(login_url="../login")
+def projections(request):
+    mv=Movie.objects.get(pk=request.GET.get('id',''))
+    prj = Projection.objects.all().filter(movie=mv)
+    return render(
+        request,
+        "common/projections.html",
+        context={
+            "movie": mv,
+            "projections": prj
+        }
+    )

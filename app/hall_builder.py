@@ -7,11 +7,11 @@ t1 = turtle.Turtle(shape='circle')
 t = turtle.Turtle()
 t.hideturtle()
 
-for i in range(0,1):
-    for j in range(0,1):
+for i in range(0,5):
+    for j in range(0,5):
         t.goto(i*100,j*100)
         t.pendown()
-        t.pen(pencolor="black", fillcolor="green", pensize= 5, speed=99900)
+        t.pen(pencolor="black", fillcolor="green", pensize= 5, speed=0)
         print(t.pos())
         t.begin_fill()
         t.write("55", align="center", font=('Arial', 20, 'normal'))

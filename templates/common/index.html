@@ -20,17 +20,33 @@
                 </div>
             </div>
         </nav>
-        <section>
+        <section style="display: flex; justify-content: space-evenly; flex-wrap: wrap; ">
      
          {% block content %}
-            {% for movie in movies %}
-               <p>{{ movie.name }}</p>
+         {% load static%}
+         {% for movie in movies %}
+         <div class="card" style="width: 18rem; margin: 0 30px 30px; cursor: pointer;" data-id="{{movie.id}}">
+            <img src="{% static movie.img_url %}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ movie.name }}</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor eligendi rerum adipisci aliquam saepe quisquam officiis cum eos veritatis nisi, rem accusantium labore reiciendis assumenda dolore eveniet delectus, ab quam.</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{ movie.genre }}</li>
+                <li class="list-group-item">{{ movie.duration }}</li>
+            </ul>
+        </div>
      
             {% endfor %}
          {% endblock %}
-     
-     
-       
         </section>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+        <script>
+            $(".card").on("click",(e)=>{
+                var movieId = $(e.currentTarget).attr("data-id");
+                window.location.href = "/projections?id=" + movieId 
+            });
+        </script>
     </body>
 </html>
