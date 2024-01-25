@@ -19,6 +19,13 @@
                     </ul>
                 </div>
             </div>
+            {% if user.is_authenticated %}
+                <a href="/logout" >Logout here</a>
+            {% else %}
+                <a href="/login" >Login here</a>
+            {% endif %}
+               
+            </div>
         </nav>
         <section style="display: flex; justify-content: space-evenly; flex-wrap: wrap; ">
      

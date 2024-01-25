@@ -6,9 +6,47 @@
     </head>
     <body>
         {% block content %}
-        {% for projection in projections %}
-        <h1>{{projection.Hall.name}}</h1>
-        {% endfor %}
+        {% load static%}
+        <div class="row" style="align-items: center;text-align: center; padding: 10px;">
+
+
+            <img src="{% static movie.img_url %}" class="ratio-4x3 col-md-3 col-6" alt="...">
+            <div class="accordion col-md-9 col-6" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            About the movie
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                        <span> {{movie.name}}</span>
+                        <div class="accordion-body">
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed, placeat nihil? Incidunt ex temporibus ad, maxime corrupti repellendus odit blanditiis labore nulla cumque hic excepturi magnam deserunt dolor qui at.
+                        </div>
+                        <div>
+                            {{movie.duration}}
+                        </div>
+                        <div>
+                            {{movie.genre}}
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Projections
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            {% for projection in projections %}
+                        <a class="btn btn-primary " href="#" role="button">{{projection.start_date}} {{projection.Hall}}</a>
+                        {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
         {%endblock%}
         
     </body>

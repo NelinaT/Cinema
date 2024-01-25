@@ -8,6 +8,7 @@ from django.contrib import messages
 from . models import Movie, Hall, Projection
 from  django.contrib.auth.models import User
 
+
 def index(request):
     Movies = Movie.objects.all()
     return render(
@@ -68,7 +69,8 @@ def agenda(request):
 @login_required(login_url="../login")
 def projections(request):
     mv=Movie.objects.get(pk=request.GET.get('id',''))
-    prj = Projection.objects.all().filter(movie=mv)
+    print(mv.toStr())
+    prj = Projection.objects.all().filter(movie=mv).order_by('start_date')
     return render(
         request,
         "common/projections.html",

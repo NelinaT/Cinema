@@ -21,6 +21,10 @@ class Hall(models.Model):
     type = models.CharField(max_length=10, choices=[("vip", "VIP"),("std", "standart"),("big", "big")])
     def __str__(self):
         return self.name
+    
+    def toStr(self):
+        return "{\n\tid: " + str(self.pk) + "\n\tname: "+ self.name + "\n\ttype: "+ self.type +"\n}"
+
     def save(self, *args, **kwargs):
         is_creating_new_row_in_db = self._state.adding
         super(Hall, self).save(*args, **kwargs)
@@ -36,9 +40,11 @@ class Seat(models.Model):
     row = models.CharField(max_length=1)
     col = models.IntegerField()
     is_available = models.BooleanField(default = True)
-
+    
     def __str__(self):
         return self.hall.name + " - row: " + str(self.row) + " col: " + str(self.col)
+    
+    
 
 class Movie(models.Model):
     name = models.CharField(max_length=200)
@@ -47,6 +53,8 @@ class Movie(models.Model):
     img_url = models.CharField(max_length = 100, default='')
     def __str__(self):
         return self.name
+    def toStr(self):
+        return "{\n\tid: " + str(self.pk) + "\n\tname: "+ self.name +  "\n\tduration: "+ self.duration.__str__() + "\n\tgenre: "+ self.genre +"\n\timg_url: "+ self.img_url +"\n}"
 
 class Projection(models.Model):
     start_date = models.DateTimeField()
