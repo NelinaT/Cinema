@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils.timezone import now
+
 capacity_for_hall_types = {
     "vip": {
         "rows": 5,
@@ -58,13 +60,13 @@ class Movie(models.Model):
         return "{\n\tid: " + str(self.pk) + "\n\tname: "+ self.name +  "\n\tduration: "+ self.duration.__str__() + "\n\tgenre: "+ self.genre +"\n\timg_url: "+ self.img_url +"\n}"
 
 class Projection(models.Model):
-    start_date = models.DateTimeField()
+    start_date = models.DateField(default=now)
+    time = models.TimeField(default=now)
     movie = models.ForeignKey(Movie,on_delete=models.SET_NULL,null=True)
     Hall = models.ForeignKey(Hall,on_delete=models.SET_NULL,null=True)
 
     @property
     def price(self):
-        print(self.Hall.type)
         if self.Hall and self.movie:
             if self.Hall.type == "vip":
                 return self.movie.price + 5

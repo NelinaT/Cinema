@@ -7,9 +7,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from . models import Movie, Hall, Projection
 from  django.contrib.auth.models import User
+from django.utils.timezone import now
+from datetime import datetime
 
 
 def index(request):
+    if is_sales(request.user):
+        return redirect('agenda')
     Movies = Movie.objects.all()
     return render(
         request,
@@ -61,20 +65,39 @@ def logout(request):
 
 @login_required(login_url="../login")
 def agenda(request):
+    prj = Projection.objects.all().order_by('start_date')
+    dates = prj.values_list('start_date', flat=True).filter(start_date__gte=now().strftime('%Y-%m-%d')).distinct()
+
+    if len(dates) > 0:
+        selected_date = dates[0]
+        if request.GET.get('date',''):
+            selected_date = request.GET.get('date','')
+        prj = prj.filter(start_date = selected_date).order_by("time")
+        selected_date = prj.first().start_date
     return render (
-        request,
-        "customer/agenda.html"
-    )
+    request,
+    "salesAsistant/agenda.html",
+    context={
+        "selected_date":selected_date,
+        "dates": dates,
+        "projections": prj
+    })
 
 @login_required(login_url="../login")
 def projections(request):
+    print(request.user.groups)
     mv=Movie.objects.get(pk=request.GET.get('id',''))
     prj = Projection.objects.all().filter(movie=mv).order_by('start_date')
+   
     return render(
         request,
         "common/projections.html",
         context={
+           
             "movie": mv,
             "projections": prj
         }
     )
+
+def is_sales(user):
+    return user.groups.filter(name='sales').exists()

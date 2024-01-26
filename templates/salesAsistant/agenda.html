@@ -1,0 +1,86 @@
+<html>
+    <head>
+        {% load bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+        <style>
+          /* .table-hover>tbody>tr:hover>* {
+            background-color: rgb(218, 231, 251);
+          }
+          .table-striped>tbody>tr:nth-of-type(odd)>* {
+
+          }
+          .table>:not(caption)>*>* {
+
+          } */
+
+        </style>
+    </head>
+    <body>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Cinema</a>
+          <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Movies</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="agenda">Program</a>
+              </li>
+            </ul>
+            <a href="/logout" >Logout here</a>
+                </div>
+            </div>
+        </nav>
+        <section>
+     
+         {% block content %}
+         <div class="dropdown">
+           
+           <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+             {{selected_date}}
+            </button>
+          <ul class="dropdown-menu">
+            {% for date in dates  %}
+            <li data-value="{{date|date:'Y-m-d'}}"><a class="dropdown-item" href="#">{{date}}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+         <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Time</th>
+              <th scope="col">Title</th>
+              <th scope="col">Hall</th>
+              <th scope="col">Price</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            {% for projection in projections %}
+            <tr>
+              <td >{{ projection.time }}</td>
+              <td >{{ projection.movie }}</td>
+              <td >{{ projection.Hall }}</td>
+              <td >{{ projection.price }} lv.</td>
+              <td >
+                <button class="btn btn-primary" type="submit">Book</button>
+              </td>
+            </tr>
+            {% endfor %}
+            {% endblock %}
+          </tbody>
+        </table>
+     
+       
+        </section>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script>
+            $(".dropdown-menu > li").on("click",(e)=>{
+                var date = $(e.currentTarget).attr("data-value");
+                window.location.href = "/agenda?date=" + date 
+            });
+        </script>
+    </body>
+</html>

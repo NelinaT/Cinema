@@ -3,6 +3,17 @@
         {% load bootstrap5 %}
         {% bootstrap_css %}
         {% bootstrap_javascript %}
+        <style>
+            .btn-primary {
+                background-color: #0f223f;
+            }
+            .list-group-item{
+                padding: 0;
+                border: none;
+                color: white;
+                background-color: transparent;
+            }
+        </style>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg">
@@ -62,7 +73,14 @@
                     <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
                             {% for projection in projections %}
-                        <a class="btn btn-primary " href="#" role="button">{{projection.start_date}} {{projection.Hall}} {{projection.price}} </a>
+                        <a class="btn btn-primary " href="#" role="button">
+                            <ul class="list-group">
+                                <li class="list-group-item">{{projection.start_date}}</li>
+                                <li class="list-group-item"> {{projection.time}}</li>
+                                <li class="list-group-item"> {{projection.Hall}}</li>
+                                <li class="list-group-item">  {{projection.price}} lv.</li>
+                            </ul>
+                        </a>
                         {% endfor %}
                     </div>
                   </div>
