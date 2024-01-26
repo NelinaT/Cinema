@@ -31,7 +31,7 @@ def login(request):
             if user is not None:
                 auth.login(request, user)
 
-                return redirect("agenda")
+                return redirect("index")
     
     context = {"loginform":form}
             
@@ -69,7 +69,6 @@ def agenda(request):
 @login_required(login_url="../login")
 def projections(request):
     mv=Movie.objects.get(pk=request.GET.get('id',''))
-    print(mv.toStr())
     prj = Projection.objects.all().filter(movie=mv).order_by('start_date')
     return render(
         request,

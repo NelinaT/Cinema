@@ -51,6 +51,7 @@ class Movie(models.Model):
     duration = models.DurationField()
     genre = models.CharField(max_length=50)
     img_url = models.CharField(max_length = 100, default='')
+    price = models.IntegerField(default = 10)
     def __str__(self):
         return self.name
     def toStr(self):
@@ -60,6 +61,19 @@ class Projection(models.Model):
     start_date = models.DateTimeField()
     movie = models.ForeignKey(Movie,on_delete=models.SET_NULL,null=True)
     Hall = models.ForeignKey(Hall,on_delete=models.SET_NULL,null=True)
+
+    @property
+    def price(self):
+        print(self.Hall.type)
+        if self.Hall and self.movie:
+            if self.Hall.type == "vip":
+                return self.movie.price + 5
+            if self.Hall.type == "std":
+                return self.movie.price + 2
+            if self.Hall.type == "big":
+                return self.movie.price
+        return 0        
+
     def __str__(self):
         return self.movie.name
 
