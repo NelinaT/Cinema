@@ -1,5 +1,8 @@
 from django.db import models
 from django.utils.timezone import now
+from datetime import timedelta
+from django.core.exceptions import ValidationError
+
 
 capacity_for_hall_types = {
     "vip": {
@@ -50,7 +53,7 @@ class Seat(models.Model):
 
 class Movie(models.Model):
     name = models.CharField(max_length=200)
-    duration = models.DurationField()
+    duration = models.IntegerField()
     genre = models.CharField(max_length=50)
     img_url = models.CharField(max_length = 100, default='')
     price = models.IntegerField(default = 10)
@@ -78,6 +81,24 @@ class Projection(models.Model):
 
     def __str__(self):
         return self.movie.name
+    
+    @staticmethod
+    def time_in_range(start, end, current):
+        return start <= current <= end
+    
+    def clean(self):
+        all_projections_per_hall = Projection.objects.all().filter(Hall = self.Hall).filter(start_date = self.start_date)
+
+        for projection in all_projections_per_hall:
+            duration = projection.movie.duration
+            start_time = projection.time
+            end_time = timedelta(hours=start_time.hour ,minutes = start_time.minute) + timedelta(minutes = duration)  + timedelta(minutes=20)
+            start_time = timedelta(hours=start_time.hour, minutes=start_time.minute)
+            new_time = timedelta(hours=self.time.hour, minutes=self.time.minute)
+            if Projection.time_in_range(start_time , end_time, new_time):
+                raise ValidationError("There is a projestion in this time")
+
+        
 
 class Seats_for_projection(models.Model):
     is_empty = models.BooleanField(default = True)
