@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.timezone import now
 from datetime import timedelta
 from django.core.exceptions import ValidationError
+from . hall_builder import generate_svg
 
 
 capacity_for_hall_types = {
@@ -77,7 +78,19 @@ class Projection(models.Model):
                 return self.movie.price + 2
             if self.Hall.type == "big":
                 return self.movie.price
-        return 0        
+        return 0     
+
+    @property
+    def hall_capacity(self):
+        if self.Hall.type == "vip":
+            return generate_svg(f"app/static/app/{self.id}.svg",1500,1500, 5, 6)
+        if self.Hall.type == "std":
+            return generate_svg(f"app/static/app/{self.id}.svg",1500,1500, 5, 10)
+        if self.Hall.type == "big":
+            return generate_svg(f"app/static/app/{self.id}.svg",1500,1500, 10, 10)
+
+
+
 
     def __str__(self):
         return self.movie.name
