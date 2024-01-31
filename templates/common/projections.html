@@ -73,21 +73,28 @@
                     <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
                             {% for projection in projections %}
-                        <a class="btn btn-primary " href="#" role="button">
-                            <ul class="list-group">
-                                <li class="list-group-item">{{projection.start_date}}</li>
-                                <li class="list-group-item"> {{projection.time}}</li>
-                                <li class="list-group-item"> {{projection.Hall}}</li>
-                                <li class="list-group-item">  {{projection.price}} lv.</li>
-                            </ul>
-                        </a>
-                        {% endfor %}
+                                <a class="btn btn-primary " href="#" role="button" data-id="{{projection.id}}">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">{{projection.start_date}}</li>
+                                        <li class="list-group-item"> {{projection.time}}</li>
+                                        <li class="list-group-item"> {{projection.Hall}}</li>
+                                        <li class="list-group-item">  {{projection.price}} lv.</li>
+                                    </ul>
+                                </a>
+                            {% endfor %}
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
+            </div>
         </div>
         {%endblock%}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script>
+            $("#collapseTwo > .accordion-body > a").on("click",(e)=>{
+                var prjId = $(e.currentTarget).attr("data-id");
+                window.location.href = "/hall?id=" + prjId 
+            });
+        </script>
         
     </body>
 </html>

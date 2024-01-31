@@ -1,0 +1,226 @@
+<html>
+    <head>
+        {% load bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">Cinema</a>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/">Movies</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="agenda">Program</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {% if user.is_authenticated %}
+                <a href="/logout" >Logout here</a>
+            {% else %}
+                <a href="/login" >Login here</a>
+            {% endif %}
+               
+            </div>
+        </nav>
+        {% block content %}
+        {% load static%}
+        <figure>
+            <img src="{% static hall_id %}"  alt="..." usemap="#image-map" id="image-map">
+            {% if hall_type == "std" %}
+                <map name="image-map">
+                    <area target="" alt="" title="" href="" coords="198,99,252,152" shape="rect">
+                    <area target="" alt="" title="" href="" coords="270,100,322,152" shape="rect">
+                    <area target="" alt="" title="" href="" coords="339,100,391,151" shape="rect">
+                    <area target="" alt="" title="" href="" coords="409,100,462,150" shape="rect">
+                    <area target="" alt="" title="" href="" coords="480,100,531,151" shape="rect">
+                    <area target="" alt="" title="" href="" coords="598,152,552,101" shape="rect">
+                    <area target="" alt="" title="" href="" coords="621,99,668,152" shape="rect">
+                    <area target="" alt="" title="" href="" coords="693,100,740,150" shape="rect">
+                    <area target="" alt="" title="" href="" coords="762,99,809,151" shape="rect">
+                    <area target="" alt="" title="" href="" coords="833,101,879,150" shape="rect">
+                    <area target="" alt="" title="" href="" coords="202,170,250,222" shape="rect">
+                    <area target="" alt="" title="" href="" coords="320,220,272,170" shape="rect">
+                    <area target="" alt="" title="" href="" coords="341,171,390,220" shape="rect">
+                    <area target="" alt="" title="" href="" coords="409,170,460,220" shape="rect">
+                    <area target="" alt="" title="" href="" coords="481,171,531,221" shape="rect">
+                    <area target="" alt="" title="" href="" coords="550,171,600,221" shape="rect">
+                    <area target="" alt="" title="" href="" coords="619,170,672,221" shape="rect">
+                    <area target="" alt="" title="" href="" coords="689,169,742,220" shape="rect">
+                    <area target="" alt="" title="" href="" coords="812,221,761,170" shape="rect">
+                    <area target="" alt="" title="" href="" coords="828,170,879,223" shape="rect">
+                    <area target="" alt="" title="" href="" coords="200,240,251,292" shape="rect">
+                    <area target="" alt="" title="" href="" coords="272,241,321,291" shape="rect">
+                    <area target="" alt="" title="" href="" coords="339,239,389,293" shape="rect">
+                    <area target="" alt="" title="" href="" coords="411,239,461,291" shape="rect">
+                    <area target="" alt="" title="" href="" coords="481,240,533,292" shape="rect">
+                    <area target="" alt="" title="" href="" coords="550,241,601,293" shape="rect">
+                    <area target="" alt="" title="" href="" coords="622,241,672,290" shape="rect">
+                    <area target="" alt="" title="" href="" coords="692,239,740,291,740,291" shape="rect">
+                    <area target="" alt="" title="" href="" coords="760,239,812,293" shape="rect">
+                    <area target="" alt="" title="" href="" coords="883,290,830,240" shape="rect">
+                    <area target="" alt="" title="" href="" coords="201,309,251,361" shape="rect">
+                    <area target="" alt="" title="" href="" coords="269,311,320,361" shape="rect">
+                    <area target="" alt="" title="" href="" coords="340,310,391,361" shape="rect">
+                    <area target="" alt="" title="" href="" coords="410,309,462,360" shape="rect">
+                    <area target="" alt="" title="" href="" coords="479,310,532,361" shape="rect">
+                    <area target="" alt="" title="" href="" coords="549,311,603,360" shape="rect">
+                    <area target="" alt="" title="" href="" coords="621,311,672,362" shape="rect">
+                    <area target="" alt="" title="" href="" coords="692,311,742,359" shape="rect">
+                    <area target="" alt="" title="" href="" coords="760,311,810,361" shape="rect">
+                    <area target="" alt="" title="" href="" coords="832,311,881,360" shape="rect">
+                    <area target="" alt="" title="" href="" coords="201,382,251,430" shape="rect">
+                    <area target="" alt="" title="" href="" coords="271,382,321,430" shape="rect">
+                    <area target="" alt="" title="" href="" coords="340,382,392,431" shape="rect">
+                    <area target="" alt="" title="" href="" coords="411,380,462,431" shape="rect">
+                    <area target="" alt="" title="" href="" coords="480,380,531,430" shape="rect">
+                    <area target="" alt="" title="" href="" coords="550,381,602,431" shape="rect">
+                    <area target="" alt="" title="" href="" coords="621,382,672,431" shape="rect">
+                    <area target="" alt="" title="" href="" coords="690,381,740,431" shape="rect">
+                    <area target="" alt="" title="" href="" coords="762,379,810,431" shape="rect">
+                    <area target="" alt="" title="" href="" coords="201,450,252,502" shape="rect">
+                    <area target="" alt="" title="" href="" coords="270,450,321,503" shape="rect">
+                    <area target="" alt="" title="" href="" coords="340,450,392,502" shape="rect">
+                    <area target="" alt="" title="" href="" coords="410,451,460,500" shape="rect">
+                    <area target="" alt="" title="" href="" coords="480,450,533,501" shape="rect">
+                    <area target="" alt="" title="" href="" coords="551,451,600,501" shape="rect">
+                    <area target="" alt="" title="" href="" coords="620,451,670,499" shape="rect">
+                    <area target="" alt="" title="" href="" coords="829,379,882,431" shape="rect">
+                    <area target="" alt="" title="" href="" coords="690,449,741,500" shape="rect">
+                    <area target="" alt="" title="" href="" coords="761,451,810,499" shape="rect">
+                    <area target="" alt="" title="" href="" coords="831,450,883,501" shape="rect">
+                </map>
+            {% elif hall_type == "big" %}
+                <map name="image-map" id="image-map">
+                    <area target="" alt="" title="" href="" coords="201,20,252,72" shape="rect">
+                    <area target="" alt="" title="" href="" coords="270,21,322,72" shape="rect">
+                    <area target="" alt="" title="" href="" coords="340,21,391,70" shape="rect">
+                    <area target="" alt="" title="" href="" coords="409,19,460,72" shape="rect">
+                    <area target="" alt="" title="" href="" coords="481,22,531,72" shape="rect">
+                    <area target="" alt="" title="" href="" coords="551,19,601,73" shape="rect">
+                    <area target="" alt="" title="" href="" coords="620,20,672,72" shape="rect">
+                    <area target="" alt="" title="" href="" coords="692,19,743,72" shape="rect">
+                    <area target="" alt="" title="" href="" coords="759,18,811,72" shape="rect">
+                    <area target="" alt="" title="" href="" coords="831,20,884,73" shape="rect">
+                    <area target="" alt="" title="" href="" coords="199,89,253,142" shape="rect">
+                    <area target="" alt="" title="" href="" coords="270,90,321,143" shape="rect">
+                    <area target="" alt="" title="" href="" coords="340,91,391,143" shape="rect">
+                    <area target="" alt="" title="" href="" coords="412,91,462,141" shape="rect">
+                    <area target="" alt="" title="" href="" coords="479,91,534,141" shape="rect">
+                    <area target="" alt="" title="" href="" coords="549,91,600,141" shape="rect">
+                    <area target="" alt="" title="" href="" coords="621,89,670,142" shape="rect">
+                    <area target="" alt="" title="" href="" coords="690,90,742,141" shape="rect">
+                    <area target="" alt="" title="" href="" coords="761,92,812,142" shape="rect">
+                    <area target="" alt="" title="" href="" coords="828,89,880,141" shape="rect">
+                    <area target="" alt="" title="" href="" coords="201,160,250,211" shape="rect">
+                    <area target="" alt="" title="" href="" coords="270,158,320,212" shape="rect">
+                    <area target="" alt="" title="" href="" coords="340,158,390,210" shape="rect">
+                    <area target="" alt="" title="" href="" coords="409,161,462,212" shape="rect">
+                    <area target="" alt="" title="" href="" coords="481,161,531,210" shape="rect">
+                    <area target="" alt="" title="" href="" coords="551,162,601,211" shape="rect">
+                    <area target="" alt="" title="" href="" coords="618,161,671,210" shape="rect">
+                    <area target="" alt="" title="" href="" coords="691,160,741,211" shape="rect">
+                    <area target="" alt="" title="" href="" coords="762,160,810,211" shape="rect">
+                    <area target="" alt="" title="" href="" coords="830,162,880,210" shape="rect">
+                    <area target="" alt="" title="" href="" coords="201,231,252,280" shape="rect">
+                    <area target="" alt="" title="" href="" coords="202,298,250,350" shape="rect">
+                    <area target="" alt="" title="" href="" coords="269,228,321,281" shape="rect">
+                    <area target="" alt="" title="" href="" coords="341,231,392,282" shape="rect">
+                    <area target="" alt="" title="" href="" coords="410,228,464,281" shape="rect">
+                    <area target="" alt="" title="" href="" coords="480,231,531,279" shape="rect">
+                    <area target="" alt="" title="" href="" coords="549,228,602,281" shape="rect">
+                    <area target="" alt="" title="" href="" coords="620,228,671,282" shape="rect">
+                    <area target="" alt="" title="" href="" coords="691,230,742,281" shape="rect">
+                    <area target="" alt="" title="" href="" coords="760,231,811,283" shape="rect">
+                    <area target="" alt="" title="" href="" coords="831,230,882,281" shape="rect">
+                    <area target="" alt="" title="" href="" coords="270,301,323,353" shape="rect">
+                    <area target="" alt="" title="" href="" coords="341,301,392,350" shape="rect">
+                    <area target="" alt="" title="" href="" coords="409,300,462,352" shape="rect">
+                    <area target="" alt="" title="" href="" coords="480,299,533,354" shape="rect">
+                    <area target="" alt="" title="" href="" coords="551,299,602,353" shape="rect">
+                    <area target="" alt="" title="" href="" coords="621,300,671,352" shape="rect">
+                    <area target="" alt="" title="" href="" coords="690,300,742,351" shape="rect">
+                    <area target="" alt="" title="" href="" coords="758,302,811,352" shape="rect">
+                    <area target="" alt="" title="" href="" coords="831,298,881,353" shape="rect">
+                    <area target="" alt="" title="" href="" coords="201,371,251,421" shape="rect">
+                    <area target="" alt="" title="" href="" coords="270,370,322,419" shape="rect">
+                    <area target="" alt="" title="" href="" coords="340,370,392,421" shape="rect">
+                    <area target="" alt="" title="" href="" coords="411,370,461,421" shape="rect">
+                    <area target="" alt="" title="" href="" coords="481,370,530,420" shape="rect">
+                    <area target="" alt="" title="" href="" coords="550,369,602,424" shape="rect">
+                    <area target="" alt="" title="" href="" coords="" shape="rect">
+                    <area target="" alt="" title="" href="" coords="619,369,672,422" shape="rect">
+                    <area target="" alt="" title="" href="" coords="690,369,741,421" shape="rect">
+                    <area target="" alt="" title="" href="" coords="760,370,811,422" shape="rect">
+                    <area target="" alt="" title="" href="" coords="831,370,881,423" shape="rect">
+                    <area target="" alt="" title="" href="" coords="201,441,250,490" shape="rect">
+                    <area target="" alt="" title="" href="" coords="269,441,322,490" shape="rect">
+                    <area target="" alt="" title="" href="" coords="340,440,392,489" shape="rect">
+                    <area target="" alt="" title="" href="" coords="410,440,459,490" shape="rect">
+                    <area target="" alt="" title="" href="" coords="481,441,530,492" shape="rect">
+                    <area target="" alt="" title="" href="" coords="552,440,601,492" shape="rect">
+                    <area target="" alt="" title="" href="" coords="620,441,672,491" shape="rect">
+                    <area target="" alt="" title="" href="" coords="691,439,741,493" shape="rect">
+                    <area target="" alt="" title="" href="" coords="760,438,811,494" shape="rect">
+                    <area target="" alt="" title="" href="" coords="831,440,880,492" shape="rect">
+                    <area target="" alt="" title="" href="" coords="200,509,252,563" shape="rect">
+                    <area target="" alt="" title="" href="" coords="269,509,322,560" shape="rect">
+                    <area target="" alt="" title="" href="" coords="339,511,392,560" shape="rect">
+                    <area target="" alt="" title="" href="" coords="411,510,460,560" shape="rect">
+                    <area target="" alt="" title="" href="" coords="479,508,533,561" shape="rect">
+                    <area target="" alt="" title="" href="" coords="550,510,601,560" shape="rect">
+                    <area target="" alt="" title="" href="" coords="620,510,673,562" shape="rect">
+                    <area target="" alt="" title="" href="" coords="691,510,742,561" shape="rect">
+                    <area target="" alt="" title="" href="" coords="761,509,812,560" shape="rect">
+                    <area target="" alt="" title="" href="" coords="830,511,882,562" shape="rect">
+                    <area target="" alt="" title="" href="" coords="200,580,251,631" shape="rect">
+                    <area target="" alt="" title="" href="" coords="270,580,321,631" shape="rect">
+                    <area target="" alt="" title="" href="" coords="338,579,392,633" shape="rect">
+                    <area target="" alt="" title="" href="" coords="410,581,461,630" shape="rect">
+                    <area target="" alt="" title="" href="" coords="480,579,531,633" shape="rect">
+                    <area target="" alt="" title="" href="" coords="200,651,252,703" shape="rect">
+                    <area target="" alt="" title="" href="" coords="550,581,603,630" shape="rect">
+                    <area target="" alt="" title="" href="" coords="622,579,671,630" shape="rect">
+                    <area target="" alt="" title="" href="" coords="690,581,742,633" shape="rect">
+                    <area target="" alt="" title="" href="" coords="759,580,813,630" shape="rect">
+                    <area target="" alt="" title="" href="" coords="830,580,882,632" shape="rect">
+                    <area target="" alt="" title="" href="" coords="271,650,322,702" shape="rect">
+                    <area target="" alt="" title="" href="" coords="339,649,390,701" shape="rect">
+                    <area target="" alt="" title="" href="" coords="410,650,461,701" shape="rect">
+                    <area target="" alt="" title="" href="" coords="480,650,532,702" shape="rect">
+                    <area target="" alt="" title="" href="" coords="549,650,602,702" shape="rect">
+                    <area target="" alt="" title="" href="" coords="621,651,671,701" shape="rect">
+                    <area target="" alt="" title="" href="" coords="690,651,741,700" shape="rect">
+                    <area target="" alt="" title="" href="" coords="761,649,810,701" shape="rect">
+                    <area target="" alt="" title="" href="" coords="881,701,831,649" shape="rect">
+                </map>
+            {% endif %}
+        </figure>
+        {% endblock %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <!-- <script src="static/app/Simple-jQuery-Plugin-For-Highlighting-Image-Map-Maphilight/jquery.maphilight.min.js"></script> -->
+        <!-- <script type="text/javascript" src="jquery.maphilight.min.js"></script> -->
+        <!-- <script type="text/javascript" src="/js/jquery.maphilight.min.js"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/maphilight/1.4.2/jquery.maphilight.min.js" integrity="sha512-1YiTT24MNHA6DRzyu+w9F5Egc8evYlyEnzSSTD4/M7q42xEb5fSpNgn0+1CPy3evubHs3xdlh8uXgae0DOhR7Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+        
+            $("#image-map").maphilight({
+                fill:false,
+                fillOpacity: 0.8,
+                stroke:true,
+                strokeColor:'417bd1',
+                // strokeOpacity: 1,
+                // fade:true,
+
+
+            });
+        
+
+
+        </script>
+    </body>
+</html>

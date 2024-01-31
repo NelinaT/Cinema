@@ -87,7 +87,7 @@ def agenda(request):
 def projections(request):
     print(request.user.groups)
     mv=Movie.objects.get(pk=request.GET.get('id',''))
-    prj = Projection.objects.all().filter(movie=mv).order_by('start_date')
+    prj = Projection.objects.all().filter(movie=mv).filter(start_date__gte=now().strftime('%Y-%m-%d')).order_by('start_date')
    
     return render(
         request,
@@ -98,6 +98,18 @@ def projections(request):
             "projections": prj
         }
     )
+
+@login_required(login_url="../login")
+def hall(request):
+    prj=Projection.objects.get(pk=request.GET.get('id',''))
+    print(prj.Hall.type)
+    return render(request, 
+                  "common/hall.html",
+                  context={
+                      "hall_id": f"app/{prj.id}.svg",
+                      "hall_type": prj.Hall.type
+                  }
+                )
 
 def is_sales(user):
     return user.groups.filter(name='sales').exists()

@@ -83,11 +83,11 @@ class Projection(models.Model):
     @property
     def hall_capacity(self):
         if self.Hall.type == "vip":
-            return generate_svg(f"app/static/app/{self.id}.svg",1500,1500, 5, 6)
+            return generate_svg(f"app/static/app/{self.id}.svg",1000,550, 6, 8)
         if self.Hall.type == "std":
-            return generate_svg(f"app/static/app/{self.id}.svg",1500,1500, 5, 10)
+            return generate_svg(f"app/static/app/{self.id}.svg",1000,600, 6, 10)
         if self.Hall.type == "big":
-            return generate_svg(f"app/static/app/{self.id}.svg",1500,1500, 10, 10)
+            return generate_svg(f"app/static/app/{self.id}.svg",1000,1000, 10, 10)
 
 
 
@@ -111,7 +111,10 @@ class Projection(models.Model):
             if Projection.time_in_range(start_time , end_time, new_time):
                 raise ValidationError("There is a projestion in this time")
 
-        
+    def save(self, *args, **kwargs):
+        super(Projection, self).save(*args, **kwargs)
+        self.hall_capacity
+    
 
 class Seats_for_projection(models.Model):
     is_empty = models.BooleanField(default = True)

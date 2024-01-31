@@ -1,4 +1,5 @@
 from svg_turtle import SvgTurtle
+import turtle
 
 row_names = ["A","B", "C","D","E","F","G","H","I","J"]
 
@@ -11,28 +12,34 @@ def parallelogram(width, height,t):
 
 def grid_of_seats(cols,rows, seat_width,t):
     t.hideturtle()
+    t.penup()
 
     for col in range(cols):
         for row in range(rows):
-            t.goto(col*70,row*70)
+            t.goto(-300 + col*70, -200 + row*70)
             t.pendown()
             t.pen(pencolor="black", fillcolor="green", pensize= 1, speed=0)
             t.begin_fill()
             parallelogram(seat_width,seat_width,t)
             t.end_fill()
             t.penup()
-            t.goto(col*70 + 25 ,row*70 +10)
+            t.goto(-300+col*70 + 25 ,-200 + row*70 +10)
             t.write(f"{row_names[row]}" + f'{col+1}', align="center", font=('Arial', 15, 'normal'))
 
     t.pen(fillcolor = "black", pensize= 2)
     t.begin_fill()
-    t.goto(-20,-90)
+    t.goto(-320,-290)
     screen_lenght = cols *( seat_width + 25)
     parallelogram(screen_lenght,50,t)
     t.end_fill()
-    t.goto(cols*36 ,-75)
+    t.goto(-300+cols*36 ,-275)
     t.color('white')
     t.write("SCREEN", align="center", font=('Arial', 15, 'normal'))
+    # turtle.done()
+
+
+# t=turtle.Turtle()
+# grid_of_seats(10,10,50,t)
 
 
 
