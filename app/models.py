@@ -3,12 +3,13 @@ from django.utils.timezone import now
 from datetime import timedelta
 from django.core.exceptions import ValidationError
 from . hall_builder import generate_svg
+from  django.contrib.auth.models import User
 
 
 capacity_for_hall_types = {
     "vip": {
-        "rows": 5,
-        "cols": 6
+        "rows": 6,
+        "cols": 8
     },
     "std": {
         "rows": 5,
@@ -116,7 +117,9 @@ class Projection(models.Model):
         self.hall_capacity
     
 
-class Seats_for_projection(models.Model):
+class Ticket(models.Model):
     is_empty = models.BooleanField(default = True)
     projection = models.ForeignKey(Projection,on_delete=models.SET_NULL,null=True)
     seat = models.ForeignKey(Seat,on_delete=models.SET_NULL,null=True)
+    user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
+

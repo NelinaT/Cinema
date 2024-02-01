@@ -102,12 +102,48 @@ def projections(request):
 @login_required(login_url="../login")
 def hall(request):
     prj=Projection.objects.get(pk=request.GET.get('id',''))
-    print(prj.Hall.type)
+    if prj.Hall.type == "big":
+        row_count = 10
+        row_range = range(10)
+        col_range = range(10)
+        starting_x = 199
+        starting_y = 19
+        starting_xx = 252
+        starting_yy = 72
+    elif prj.Hall.type == "std":
+        row_count = 6
+        row_range = range(6)
+        col_range = range(10)
+        starting_x = 199
+        starting_y = 99
+        starting_xx = 252
+        starting_yy = 152
+    else:
+        row_count = 6
+        row_range = range(6)
+        col_range = range(8)
+        starting_x = 199
+        starting_y = 74
+        starting_xx = 252
+        starting_yy = 127
+
+
+
     return render(request, 
                   "common/hall.html",
                   context={
                       "hall_id": f"app/{prj.id}.svg",
-                      "hall_type": prj.Hall.type
+                      "hall_type": prj.Hall.type,
+                      "row_range" : row_range,
+                      "col_range": col_range,
+                      "row_count": row_count,
+                      "starting_x":starting_x,
+                      "starting_xx":starting_xx,
+                      "starting_y":starting_y,
+                      "starting_yy":starting_yy
+
+
+
                   }
                 )
 
