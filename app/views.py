@@ -5,10 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from . models import Movie, Hall, Projection
+from . models import Movie, Hall, Projection, Seat, Ticket
 from  django.contrib.auth.models import User
 from django.utils.timezone import now
-from datetime import datetime
 
 
 def index(request):
@@ -102,6 +101,7 @@ def projections(request):
 @login_required(login_url="../login")
 def hall(request):
     prj=Projection.objects.get(pk=request.GET.get('id',''))
+    prj.hall_capacity()
     if prj.Hall.type == "big":
         row_count = 10
         row_range = range(10)
@@ -127,8 +127,6 @@ def hall(request):
         starting_xx = 252
         starting_yy = 127
 
-
-
     return render(request, 
                   "common/hall.html",
                   context={
@@ -141,9 +139,6 @@ def hall(request):
                       "starting_xx":starting_xx,
                       "starting_y":starting_y,
                       "starting_yy":starting_yy
-
-
-
                   }
                 )
 

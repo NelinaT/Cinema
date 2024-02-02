@@ -1,7 +1,15 @@
 from svg_turtle import SvgTurtle
-import turtle
 
-row_names = ["A","B", "C","D","E","F","G","H","I","J"]
+
+row_names = {"A":0,"B":1, "C":2,"D":3,"E":4,"F":5,"G":6,"H":7,"I":8,"J":9}
+
+def is_seat_available(seat, tickets):
+    
+    for ticket in tickets:
+        if ticket.seat == seat:
+            return False
+    return True
+
 
 def parallelogram(width, height,t):
     for _ in range(2):
@@ -10,21 +18,27 @@ def parallelogram(width, height,t):
         t.forward(height) 
         t.left(90)
 
-def grid_of_seats(cols,rows, seat_width,t):
+def grid_of_seats(seat_width,t,seats, tickets, cols):
     t.hideturtle()
     t.penup()
 
-    for col in range(cols):
-        for row in range(rows):
-            t.goto(-300 + col*70, -200 + row*70)
-            t.pendown()
+    for seat in seats:
+        t.goto(-300 + (seat.col-1)*70, -200 + row_names[seat.row]*70)
+        t.pendown()
+        print(seat)
+        print(tickets)
+        if not seat.is_available:
+            t.pen(pencolor="black", fillcolor="red", pensize= 1, speed=0)
+        elif is_seat_available(seat, tickets):
             t.pen(pencolor="black", fillcolor="green", pensize= 1, speed=0)
-            t.begin_fill()
-            parallelogram(seat_width,seat_width,t)
-            t.end_fill()
-            t.penup()
-            t.goto(-300+col*70 + 25 ,-200 + row*70 +10)
-            t.write(f"{row_names[row]}" + f'{col+1}', align="center", font=('Arial', 15, 'normal'))
+        else:
+            t.pen(pencolor="black", fillcolor="gray", pensize= 1, speed=0)
+        t.begin_fill()
+        parallelogram(seat_width,seat_width,t)
+        t.end_fill()
+        t.penup()
+        t.goto(-300+(seat.col-1)*70 + 25 ,-200 + row_names[seat.row]*70 +10)
+        t.write(f"{seat.row}" + f'{seat.col}', align="center", font=('Arial', 15, 'normal'))
 
     t.pen(fillcolor = "black", pensize= 2)
     t.begin_fill()
@@ -43,9 +57,9 @@ def grid_of_seats(cols,rows, seat_width,t):
 
 
 
-def generate_svg(filename, width, height,rows, cols):
+def generate_svg(filename, width, height, seats, tickets, cols):
     t = SvgTurtle(width, height)
-    grid_of_seats(cols,rows,50,t)
+    grid_of_seats(50,t,seats,tickets,cols)
     t.save_as(filename)
     return filename
 

@@ -12,7 +12,7 @@ capacity_for_hall_types = {
         "cols": 8
     },
     "std": {
-        "rows": 5,
+        "rows": 6,
         "cols": 10
     },
     "big": {
@@ -81,20 +81,22 @@ class Projection(models.Model):
                 return self.movie.price
         return 0     
 
-    @property
+
     def hall_capacity(self):
+        tickets = Ticket.objects.all().filter(projection=self)
+        seats = Seat.objects.all().filter(hall=self.Hall)
         if self.Hall.type == "vip":
-            return generate_svg(f"app/static/app/{self.id}.svg",1000,550, 6, 8)
+            return generate_svg(f"app/static/app/{self.id}.svg",1000,550, seats, tickets, 8)
         if self.Hall.type == "std":
-            return generate_svg(f"app/static/app/{self.id}.svg",1000,600, 6, 10)
+            return generate_svg(f"app/static/app/{self.id}.svg",1000,600, seats, tickets, 10)
         if self.Hall.type == "big":
-            return generate_svg(f"app/static/app/{self.id}.svg",1000,1000, 10, 10)
+            return generate_svg(f"app/static/app/{self.id}.svg",1000,1000, seats, tickets, 10)
 
 
 
 
     def __str__(self):
-        return self.movie.name
+        return f"{self.id} - {self.movie.name}"
     
     @staticmethod
     def time_in_range(start, end, current):
@@ -111,14 +113,10 @@ class Projection(models.Model):
             new_time = timedelta(hours=self.time.hour, minutes=self.time.minute)
             if Projection.time_in_range(start_time , end_time, new_time):
                 raise ValidationError("There is a projestion in this time")
-
-    def save(self, *args, **kwargs):
-        super(Projection, self).save(*args, **kwargs)
-        self.hall_capacity
     
 
 class Ticket(models.Model):
-    is_empty = models.BooleanField(default = True)
+    
     projection = models.ForeignKey(Projection,on_delete=models.SET_NULL,null=True)
     seat = models.ForeignKey(Seat,on_delete=models.SET_NULL,null=True)
     user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
