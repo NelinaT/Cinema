@@ -3,6 +3,15 @@
         {% load bootstrap5 %}
         {% bootstrap_css %}
         {% bootstrap_javascript %}
+        <style>
+            .container{
+                position: absolute;
+                /* right: 0px; */
+                left: 1000px;
+                top: 200px;
+                width: 500px;
+            }
+        </style>
     </head>
     <body>
         
@@ -47,6 +56,26 @@
         {% endblock %}
                 </map>          
         </figure>
+        <div class="container">
+
+            <div>
+                Currently you have chosen 
+                <span id="ticketsNumber">0</span>
+                seats!
+            </div>
+            <div>
+                Current price:
+                <span id="cost">0</span>
+                lv.
+            </div>
+            <button type="button" class="btn btn-primary btn-lg">Continue</button>
+        </div>
+
+        <form action="/payment" style="display: none;" method="post">
+            {% csrf_token %}
+            <input id="seats"type="text" name="seats">
+            <input id="projId"type="text" name="projId" value="{{projection.id}}">
+        </form>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/maphilight/1.4.2/jquery.maphilight.min.js" integrity="sha512-1YiTT24MNHA6DRzyu+w9F5Egc8evYlyEnzSSTD4/M7q42xEb5fSpNgn0+1CPy3evubHs3xdlh8uXgae0DOhR7Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script>
@@ -63,15 +92,42 @@
 
             });
             $(".area").on("click",(e)=>{
-                var data = $(e.currentTarget).data('maphilight') || {};
+                var $this =  $(e.currentTarget)
+                var count = parseInt( $("#ticketsNumber").html())
+                var data = $this.data('maphilight') || {};
+                var cost = parseInt( $("#cost").html())
+
+                $this.toggleClass("active")
+                
                 if (data.alwaysOn) {
                     data.alwaysOn = false;
+                    count -=1
                 }
                 else {
                     data.alwaysOn=true;
+                    count +=1
                 }
-                $(e.currentTarget).data('maphilight', data).trigger('alwaysOn.maphilight');
+                cost = count *  "{{price}}"
+                $this.data('maphilight', data).trigger('alwaysOn.maphilight');
+
+                $("#ticketsNumber").html(count)
+                $("#cost").html(cost)
             });
+            $(".btn").on("click",(e)=>{
+                var seats = $('area.active');
+                var data = [];
+                var $formInput = $("form input#seats")
+
+                for(var i=0; i< seats.length; i++){
+                    data.push({
+                        row: seats.eq(i).attr("data-row"),
+                        col: seats.eq(i).attr("data-col")
+                    });
+                }
+                $formInput.val(JSON.stringify(data)).parent().submit();
+            });
+
+           
             
         </script>
     </body>

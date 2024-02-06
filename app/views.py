@@ -8,6 +8,8 @@ from django.contrib import messages
 from . models import Movie, Hall, Projection, Seat, Ticket
 from  django.contrib.auth.models import User
 from django.utils.timezone import now
+from django.views.decorators.csrf import csrf_protect, requires_csrf_token
+from django.template import RequestContext
 
 
 def index(request):
@@ -99,6 +101,7 @@ def projections(request):
     )
 
 @login_required(login_url="../login")
+@requires_csrf_token
 def hall(request):
     prj=Projection.objects.get(pk=request.GET.get('id',''))
     prj.hall_capacity()
@@ -127,11 +130,12 @@ def hall(request):
         starting_xx = 252
         starting_yy = 127
 
-    return render(request, 
+    return render(request,
                   "common/hall.html",
                   context={
                       "hall_id": f"app/{prj.id}.svg",
                       "hall_type": prj.Hall.type,
+                      "price": prj.price,
                       "row_range" : row_range,
                       "col_range": col_range,
                       "row_count": row_count,
@@ -141,6 +145,16 @@ def hall(request):
                       "starting_yy":starting_yy
                   }
                 )
+
+@login_required(login_url="../login")
+@requires_csrf_token
+def payment(request):
+    
+    return render(
+         request,
+        "common/payment.html"
+    )
+
 
 def is_sales(user):
     return user.groups.filter(name='sales').exists()

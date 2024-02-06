@@ -10,7 +10,6 @@ def is_seat_available(seat, tickets):
             return False
     return True
 
-
 def parallelogram(width, height,t):
     for _ in range(2):
         t.forward(width) 
@@ -25,8 +24,6 @@ def grid_of_seats(seat_width,t,seats, tickets, cols):
     for seat in seats:
         t.goto(-300 + (seat.col-1)*70, -200 + row_names[seat.row]*70)
         t.pendown()
-        print(seat)
-        print(tickets)
         if not seat.is_available:
             t.pen(pencolor="black", fillcolor="red", pensize= 1, speed=0)
         elif is_seat_available(seat, tickets):
@@ -49,27 +46,9 @@ def grid_of_seats(seat_width,t,seats, tickets, cols):
     t.goto(-300+cols*36 ,-275)
     t.color('white')
     t.write("SCREEN", align="center", font=('Arial', 15, 'normal'))
-    # turtle.done()
-
-
-# t=turtle.Turtle()
-# grid_of_seats(10,10,50,t)
-
-
 
 def generate_svg(filename, width, height, seats, tickets, cols):
     t = SvgTurtle(width, height)
     grid_of_seats(50,t,seats,tickets,cols)
     t.save_as(filename)
     return filename
-
-
-# def generate_svg():
-#     write_file(grid_of_seats, 'example.svg', 1500, 1500)
-#     print('Done.')
-    
-
-
-# generate_svg()
-
-# generate_svg(grid_of_seats, 'app/static/app/example.svg', 1500, 1500,3,4 )
