@@ -96,7 +96,7 @@ class Projection(models.Model):
 
 
     def __str__(self):
-        return f"{self.id} - {self.movie.name}"
+        return f"{self.id} - {self.movie.name} {self.Hall.name}"
     
     @staticmethod
     def time_in_range(start, end, current):
@@ -120,4 +120,7 @@ class Ticket(models.Model):
     projection = models.ForeignKey(Projection,on_delete=models.SET_NULL,null=True)
     seat = models.ForeignKey(Seat,on_delete=models.SET_NULL,null=True)
     user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
-
+    payment_method=models.CharField(max_length=10,null=True)
+    
+    def __str__(self):
+        return f"{self.projection} - {self.seat} {self.payment_method}"
