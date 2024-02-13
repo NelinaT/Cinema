@@ -12,6 +12,7 @@ from django.views.decorators.csrf import csrf_protect, requires_csrf_token
 from django.template import RequestContext
 from . utils import digitToChar, charToDigit
 import json
+import qrcode
 
 
 def index(request):
@@ -180,12 +181,9 @@ def hall(request):
 def payment(request):
     prj = Projection.objects.get(pk=request.POST.get("projId"))
     seats = json.loads(request.POST.get("seats"))
-    print(seats)
 
     for s in seats:
-        print(s["payment"])
         seat = Seat.objects.get(row = digitToChar(int(s["row"])), col=int(s["col"]), hall=prj.Hall)
-        print(seat)
         payment_method =  s["payment"]
         ticket = Ticket(projection=prj,user=request.user,seat=seat, payment_method = payment_method)
         ticket.save()
@@ -193,7 +191,18 @@ def payment(request):
 
     return render(
          request,
-        "common/payment.html"
+        "common/success_payment.html"
+    )
+def myTickets(request):
+    user_ticket = Ticket.objects.all().filter(user = request.user.id)
+
+    return render(
+         request,
+        "common/myTickets.html",
+        context={
+            "user_tickets":user_ticket,
+            # "img" : img
+        }
     )
 
 def is_sales(user):

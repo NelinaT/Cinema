@@ -10,7 +10,9 @@ urlpatterns = [
     path("agenda/", views.agenda, name="agenda"),
     path("projections", views.projections, name="projections"),
     path("hall", views.hall, name="hall"),
-    path("payment", views.payment, name="payment")
+    path("success_payment", views.payment, name="payment"),
+    path("myTickets", views.myTickets, name="myTickets")
+
 
 
 

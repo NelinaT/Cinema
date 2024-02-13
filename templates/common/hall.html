@@ -14,7 +14,6 @@
         </style>
     </head>
     <body>
-        
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">Cinema</a>
@@ -63,7 +62,7 @@
             <button type="button" class="btn btn-primary btn-lg" id="continueBtn" data-bs-toggle="modal" data-bs-target="#priceModal">Continue</button>
         </div>
 
-        <form action="/payment" style="display: none;" method="post">
+        <form action="/success_payment" style="display: none;" method="post">
             {% csrf_token %}
             <input id="seats"type="text" name="seats">
             <input id="projId"type="text" name="projId" value="{{projection.id}}">
@@ -82,7 +81,7 @@
                         <p>Total cost: <span id="price"></span> lv.</p>
 
                         <div class="list-group">
-                            <button type="button" class="list-group-item list-group-item-action payment_method" data-pm="card"> Card</button>
+                            <button type="button" class="list-group-item list-group-item-action payment_method active" data-pm="card"> Card</button>
                             <button type="button" class="list-group-item list-group-item-action payment_method" data-pm="cash"> Cash</button>
                         </div>
                     </div>
@@ -103,11 +102,6 @@
                 fillOpacity: 0.4,
                 fillColor: 'f7a201',
                 stroke:true,
-                // neverOn:true
-                // strokeOpacity: 1,
-                // fade:true,
-
-
             });
             $(".area").on("click",(e)=>{
                 var $this =  $(e.currentTarget)
@@ -136,8 +130,6 @@
                 var $this =  $(e.currentTarget)
                 $(".payment_method").removeClass("active")
                 $this.addClass("active")
-
-                
             });
 
 
@@ -152,7 +144,6 @@
                         row: seats.eq(i).attr("data-row"),
                         col: seats.eq(i).attr("data-col"),
                         payment: payment_method
-
                     });
                 }
                 $formInput.val(JSON.stringify(data)).parent().submit();
@@ -163,9 +154,6 @@
                 $("#price").text(seatsCount*singlePrice);
                 $("#count").text(seatsCount);
             });
-
-           
-            
         </script>
     </body>
 </html>

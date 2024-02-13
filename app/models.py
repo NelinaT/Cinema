@@ -4,6 +4,7 @@ from datetime import timedelta
 from django.core.exceptions import ValidationError
 from . hall_builder import generate_svg
 from  django.contrib.auth.models import User
+import qrcode
 
 
 capacity_for_hall_types = {
@@ -92,11 +93,8 @@ class Projection(models.Model):
         if self.Hall.type == "big":
             return generate_svg(f"app/static/app/{self.id}.svg",1000,1000, seats, tickets, 10)
 
-
-
-
     def __str__(self):
-        return f"{self.id} - {self.movie.name} {self.Hall.name}"
+        return f"{self.id} - {self.movie.name} "
     
     @staticmethod
     def time_in_range(start, end, current):
@@ -122,5 +120,19 @@ class Ticket(models.Model):
     user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
     payment_method=models.CharField(max_length=10,null=True)
     
+    def qr_generator(self):
+        data = {"id":self.id,
+               "projection" :self.projection,
+               "seat":self.seat,
+               "user": self.user,
+               "payment_method": self.payment_method
+               
+               } 
+        img = qrcode.make(data)
+        type(img)  # qrcode.image.pil.PilImage
+        path = f"app/ticket_{self.id}.png"
+        img.save(path)
+        return path
+
     def __str__(self):
         return f"{self.projection} - {self.seat} {self.payment_method}"
