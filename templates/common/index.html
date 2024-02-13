@@ -5,28 +5,7 @@
         {% bootstrap_javascript %}
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/">Cinema</a>
-                <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/">Movies</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="agenda">Program</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            {% if user.is_authenticated %}
-                <a href="/logout" >Logout here</a>
-            {% else %}
-                <a href="/login" >Login here</a>
-            {% endif %}
-               
-            </div>
-        </nav>
+        {% include 'common/navbar.html'  %}
         <section style="display: flex; justify-content: space-evenly; flex-wrap: wrap; ">
      
          {% block content %}

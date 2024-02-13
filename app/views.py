@@ -22,7 +22,7 @@ def index(request):
     return render(
         request,
         "common/index.html",
-        context={"movies": Movies}
+        context={"movies": Movies, "is_sales_user":is_sales(request.user)}
     )
 
 def login(request):
@@ -84,7 +84,8 @@ def agenda(request):
     context={
         "selected_date":selected_date,
         "dates": dates,
-        "projections": prj
+        "projections": prj ,
+        "is_sales_user":is_sales(request.user)
     })
 
 @login_required(login_url="../login")
@@ -99,7 +100,8 @@ def projections(request):
         context={
            
             "movie": mv,
-            "projections": prj
+            "projections": prj,
+            "is_sales_user":is_sales(request.user)
         }
     )
 
@@ -172,7 +174,9 @@ def hall(request):
                       "hall_id": f"app/{prj.id}.svg",
                       "price": prj.price,
                       "coords" : coords_list,
-                      "projection": prj
+                      "projection": prj,
+                      "is_sales_user":is_sales(request.user)
+
                     }
                 )
 
@@ -191,7 +195,10 @@ def payment(request):
 
     return render(
          request,
-        "common/success_payment.html"
+        "common/success_payment.html",
+        context={
+            "is_sales_user": is_sales(request.user)
+        }
     )
 def myTickets(request):
     user_ticket = Ticket.objects.all().filter(user = request.user.id)
@@ -201,6 +208,7 @@ def myTickets(request):
         "common/myTickets.html",
         context={
             "user_tickets":user_ticket,
+            "is_sales_user":is_sales(request.user)
             # "img" : img
         }
     )

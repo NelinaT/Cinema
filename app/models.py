@@ -131,7 +131,7 @@ class Ticket(models.Model):
         img = qrcode.make(data)
         type(img)  # qrcode.image.pil.PilImage
         path = f"app/ticket_{self.id}.png"
-        img.save(path)
+        img.save(f"app/static/app/ticket_{self.id}.png")
         return path
 
     def __str__(self):

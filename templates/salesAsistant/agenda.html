@@ -17,28 +17,7 @@
         </style>
     </head>
     <body>
-      <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">Cinema</a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Movies</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="agenda">Program</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        {% if user.is_authenticated %}
-            <a href="/logout" >Logout here</a>
-        {% else %}
-            <a href="/login" >Login here</a>
-        {% endif %}
-           
-        </div>
-      </nav>
+      {% include 'common/navbar.html'  %}
         <section>
      
          {% block content %}
@@ -71,7 +50,7 @@
               <td >{{ projection.Hall }}</td>
               <td >{{ projection.price }} lv.</td>
               <td >
-                <button class="btn btn-primary" type="submit">Book</button>
+                <button class="btn btn-primary bookBtn" type="submit" data-id={{projection.id}}>Book</button>
               </td>
             </tr>
             {% endfor %}
@@ -86,6 +65,10 @@
             $(".dropdown-menu > li").on("click",(e)=>{
                 var date = $(e.currentTarget).attr("data-value");
                 window.location.href = "/agenda?date=" + date 
+            });
+
+            $(".bookBtn").on("click",(e)=>{
+              window.location.href = "/hall?id=" + $(e.currentTarget).attr("data-id");
             });
         </script>
     </body>
