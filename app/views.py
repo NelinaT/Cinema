@@ -12,7 +12,6 @@ from django.views.decorators.csrf import csrf_protect, requires_csrf_token
 from django.template import RequestContext
 from . utils import digitToChar, charToDigit
 import json
-import qrcode
 
 
 def index(request):
@@ -90,7 +89,6 @@ def agenda(request):
 
 @login_required(login_url="../login")
 def projections(request):
-    print(request.user.groups)
     mv=Movie.objects.get(pk=request.GET.get('id',''))
     prj = Projection.objects.all().filter(movie=mv).filter(start_date__gte=now().strftime('%Y-%m-%d')).order_by('start_date')
    

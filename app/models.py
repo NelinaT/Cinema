@@ -108,8 +108,11 @@ class Projection(models.Model):
             start_time = projection.time
             end_time = timedelta(hours=start_time.hour ,minutes = start_time.minute) + timedelta(minutes = duration)  + timedelta(minutes=20)
             start_time = timedelta(hours=start_time.hour, minutes=start_time.minute)
+            duration_new=self.movie.duration
             new_time = timedelta(hours=self.time.hour, minutes=self.time.minute)
-            if Projection.time_in_range(start_time , end_time, new_time):
+            new_time_end = timedelta(hours=self.time.hour, minutes=self.time.minute)+ timedelta(minutes = duration_new)  + timedelta(minutes=20)
+            if Projection.time_in_range(start_time , end_time, new_time) or Projection.time_in_range(start_time , end_time, new_time_end):
+                # self.delete()
                 raise ValidationError("There is a projestion in this time")
     
 
