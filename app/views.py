@@ -70,7 +70,7 @@ def logout(request):
 def agenda(request):
     prj = Projection.objects.all().order_by('start_date')
     dates = prj.values_list('start_date', flat=True).filter(start_date__gte=now().strftime('%Y-%m-%d')).distinct()
-
+    selected_date = now()
     if len(dates) > 0:
         selected_date = dates[0]
         if request.GET.get('date',''):

@@ -53,8 +53,38 @@ class indexTest(TestCase):
         )
     
 class agendaTest(TestCase):
+    def test_sales_users_access_only(self):
+        self.group = Group(name="sales")
+        self.group.save()
+        self.user = User.objects.create_user(username='testuser', password='12345')
 
+        self.user.groups.add(self.group)
+        login = self.client.login(username='testuser', password='12345')
+        
+        url = reverse("agenda")
+        response = self.client.get(url)
+
+        self.assertTrue(
+            response.context["is_sales_user"]
+        )
     
+    def test_not_sales_users_access(self):
+        self.group = Group(name="customer")
+        self.group.save()
+        self.user = User.objects.create_user(username='testuser', password='12345')
+
+        self.user.groups.add(self.group)
+        login = self.client.login(username='testuser', password='12345')
+        
+        url = reverse("agenda")
+        response = self.client.get(url)
+
+        self.assertFalse(
+            response.context["is_sales_user"]
+        )
+        
+
+
     def test_one_prj(self):
         self.group = Group(name="sales")
         self.group.save()
@@ -83,12 +113,9 @@ class agendaTest(TestCase):
             response.context["dates"],
             [prj.start_date],
         )
+        
 
-        self.assertTrue(
-            response.context["is_sales_user"]
-        )
-
-def test_many_prj(self):
+    def test_two_projections_in_one_day(self):
         self.group = Group(name="sales")
         self.group.save()
         self.user = User.objects.create_user(username='testuser', password='12345')
@@ -114,6 +141,7 @@ def test_many_prj(self):
 
         url = reverse("agenda")
         response = self.client.get(url)
+    
 
         self.assertQuerySetEqual(
             response.context["projections"],
@@ -124,7 +152,97 @@ def test_many_prj(self):
             response.context["dates"],
             [prj.start_date],
         )
+        self.assertEqual(
+            response.context["selected_date"],
+            prj.start_date
+        )
+    def test_two_projections_in_two_days(self):
+        self.group = Group(name="sales")
+        self.group.save()
+        self.user = User.objects.create_user(username='testuser', password='12345')
+        self.user.groups.add(self.group)
+        login = self.client.login(username='testuser', password='12345')
+        
+        hall= create_hall("vip","vip")
+        movie = create_movie("IT",130,"horror","...", 10)
+        param={
+            "start_date":datetime.date(2024, 2, 19),
+            "time": datetime.time(17,30),
+            "movie": movie,
+            "hall":hall
+            }
+        param2={
+            "start_date":datetime.date(2024, 2, 29),
+            "time": datetime.time(22,30),
+            "movie": movie,
+            "hall":hall
+            }
+        prj = create_Projection(param)
+        prj2 = create_Projection(param2)
 
-        self.assertTrue(
-            response.context["is_sales_user"]
+        url = reverse("agenda")
+        response = self.client.get(url)
+    
+
+        self.assertQuerySetEqual(
+            response.context["projections"],
+            [prj]
+        )
+
+        self.assertQuerySetEqual(
+            response.context["dates"],
+            [prj.start_date, prj2.start_date],
+        )
+        self.assertEqual(
+            response.context["selected_date"],
+            prj.start_date
+        )
+
+    def test_three_projections_in_two_days(self):
+        self.group = Group(name="sales")
+        self.group.save()
+        self.user = User.objects.create_user(username='testuser', password='12345')
+        self.user.groups.add(self.group)
+        login = self.client.login(username='testuser', password='12345')
+        
+        hall= create_hall("vip","vip")
+        movie = create_movie("IT",130,"horror","...", 10)
+        param={
+            "start_date":datetime.date(2024, 2, 19),
+            "time": datetime.time(17,30),
+            "movie": movie,
+            "hall":hall
+            }
+        param2={
+            "start_date":datetime.date(2024, 2, 29),
+            "time": datetime.time(22,30),
+            "movie": movie,
+            "hall":hall
+            }
+        param3={
+            "start_date":datetime.date(2024, 2, 19),
+            "time": datetime.time(22,30),
+            "movie": movie,
+            "hall":hall
+            }
+        prj = create_Projection(param)
+        prj2 = create_Projection(param2)
+        prj3 = create_Projection(param3)
+
+        url = reverse("agenda")
+        response = self.client.get(url)
+    
+
+        self.assertQuerySetEqual(
+            response.context["projections"],
+            [prj,prj3]
+        )
+
+        self.assertQuerySetEqual(
+            response.context["dates"],
+            [prj.start_date, prj2.start_date],
+        )
+        self.assertEqual(
+            response.context["selected_date"],
+            prj.start_date
         )
