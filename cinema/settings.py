@@ -136,7 +136,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
 
-# SOUTH_TESTS_MIGRATE = False
-
 if 'test' in sys.argv:
     DATABASES['default'] = DATABASES['test'];

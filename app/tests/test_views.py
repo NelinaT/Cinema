@@ -16,21 +16,16 @@ def create_hall(name, type):
      return Hall.objects.create(name=name, type=type)
 
 def create_Projection(param):
-    return  Projection.objects.create(start_date=param["start_date"], time=param["time"], movie=param["movie"], Hall=param['hall'])
-
+    return  Projection.objects.create(start_date=param["start_date"], time=param["time"], movie=param["movie"], hall=param['hall'])
 
 
 class indexTest(TestCase):
-    # movie = create_movie("IT",130,"horror","...", 10)
-    # movie2 = create_movie("After",130,"romance","...", 10)
 
     def test_no_movies(self):
-
         response = self.client.get(reverse("index"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "No movies are available.")
         self.assertQuerySetEqual(response.context["movies"], [])
-
 
     def test_one_movie(self):
         movie = create_movie("IT",130,"horror","...", 10)
@@ -43,24 +38,23 @@ class indexTest(TestCase):
     def test_many_movies(self):
         movie = create_movie("IT",130,"horror","...", 10)
         movie2 = create_movie("After",130,"Romance","...", 10)
-        movie3= create_movie("Bad boys",130,"Comedy","...", 10)
-
+        movie3 = create_movie("Bad boys",130,"Comedy","...", 10)
         response = self.client.get(reverse("index"))
+
         self.assertQuerySetEqual(
             response.context["movies"],
             [movie3,movie2, movie],
             ordered=False
         )
     
+
 class agendaTest(TestCase):
     def test_sales_users_access_only(self):
         self.group = Group(name="sales")
         self.group.save()
         self.user = User.objects.create_user(username='testuser', password='12345')
-
         self.user.groups.add(self.group)
         login = self.client.login(username='testuser', password='12345')
-        
         url = reverse("agenda")
         response = self.client.get(url)
 
@@ -72,10 +66,8 @@ class agendaTest(TestCase):
         self.group = Group(name="customer")
         self.group.save()
         self.user = User.objects.create_user(username='testuser', password='12345')
-
         self.user.groups.add(self.group)
         login = self.client.login(username='testuser', password='12345')
-        
         url = reverse("agenda")
         response = self.client.get(url)
 
@@ -83,8 +75,6 @@ class agendaTest(TestCase):
             response.context["is_sales_user"]
         )
         
-
-
     def test_one_prj(self):
         self.group = Group(name="sales")
         self.group.save()
@@ -114,7 +104,6 @@ class agendaTest(TestCase):
             [prj.start_date],
         )
         
-
     def test_two_projections_in_one_day(self):
         self.group = Group(name="sales")
         self.group.save()
@@ -138,11 +127,9 @@ class agendaTest(TestCase):
             }
         prj = create_Projection(param)
         prj2 = create_Projection(param2)
-
         url = reverse("agenda")
         response = self.client.get(url)
     
-
         self.assertQuerySetEqual(
             response.context["projections"],
             [prj, prj2],
@@ -156,6 +143,7 @@ class agendaTest(TestCase):
             response.context["selected_date"],
             prj.start_date
         )
+
     def test_two_projections_in_two_days(self):
         self.group = Group(name="sales")
         self.group.save()
@@ -179,10 +167,8 @@ class agendaTest(TestCase):
             }
         prj = create_Projection(param)
         prj2 = create_Projection(param2)
-
         url = reverse("agenda")
         response = self.client.get(url)
-    
 
         self.assertQuerySetEqual(
             response.context["projections"],
@@ -231,7 +217,6 @@ class agendaTest(TestCase):
 
         url = reverse("agenda")
         response = self.client.get(url)
-    
 
         self.assertQuerySetEqual(
             response.context["projections"],
@@ -242,16 +227,18 @@ class agendaTest(TestCase):
             response.context["dates"],
             [prj.start_date, prj2.start_date],
         )
+
         self.assertEqual(
             response.context["selected_date"],
             prj.start_date
         )
 
+
 class projectionsTest(TestCase):
+
     def test_projections(self):
         self.user = User.objects.create_user(username='testuser', password='12345')
         login = self.client.login(username='testuser', password='12345')
-        
         hall= create_hall("vip","vip")
         movie = create_movie("IT",130,"horror","...", 10)
         movie2 = create_movie("Bad boys",130,"horror","...", 10)
@@ -274,10 +261,9 @@ class projectionsTest(TestCase):
             "movie": movie2,
             "hall":hall
             }
-        prj= create_Projection(param)
-        prj2= create_Projection(param2)
-        prj3= create_Projection(param3)
-
+        prj = create_Projection(param)
+        prj2 = create_Projection(param2)
+        prj3 = create_Projection(param3)
         response = self.client.get('/projections', {'id': 1})
 
         self.assertQuerySetEqual(

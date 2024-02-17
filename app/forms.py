@@ -20,4 +20,3 @@ class LoginForm(AuthenticationForm):
     
 class SeatForm(forms.Form):
     seats = forms.CharField(widget=TextInput())
-

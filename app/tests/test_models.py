@@ -1,6 +1,5 @@
 from django.test import TestCase
-from django.db import models
-from app.models import Movie, Hall, Projection, Seat, Ticket
+from app.models import Movie, Hall, Projection
 import datetime
 from django.core.exceptions import ValidationError
 
@@ -46,18 +45,19 @@ class ProjectionTests(TestCase):
     }
 
     def create_Projection(self, param):
-        prj = Projection.objects.create(start_date=param["start_date"], time=param["time"], movie=param["movie"], Hall=param['hall'])
+        prj = Projection.objects.create(start_date=param["start_date"], time=param["time"], movie=param["movie"], hall=param['hall'])
         prj.movie.save()
-        prj.Hall.save()
-        # prj.save()
+        prj.hall.save()
         return prj
     
     def test_price(self):
         prj = ProjectionTests.create_Projection(self,self.case_1)
         self.assertTrue(isinstance(prj, Projection))
         self.assertEqual(prj.price, 15)
+
         prj = ProjectionTests.create_Projection(self,self.case_2)
         self.assertEqual(prj.price, 10)
+
         prj = ProjectionTests.create_Projection(self,self.case_3)
         self.assertEqual(prj.price, 12)
     
@@ -82,9 +82,6 @@ class ProjectionTests(TestCase):
         #test if the end of the new projection is during abother projection
         prj5 = ProjectionTests.create_Projection(self, self.case_6)
         self.assertRaises(ValidationError,prj5.clean)
-        
-
-        # Projection.objects.all().delete()
 
 
 

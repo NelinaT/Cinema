@@ -1,15 +1,12 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from . forms import CreateUserForm, LoginForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import auth
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate
 from django.contrib import messages
 from . models import Movie, Hall, Projection, Seat, Ticket
-from  django.contrib.auth.models import User
 from django.utils.timezone import now
-from django.views.decorators.csrf import csrf_protect, requires_csrf_token
-from django.template import RequestContext
+from django.views.decorators.csrf import requires_csrf_token
 from . utils import digitToChar, charToDigit
 import json
 
@@ -30,18 +27,16 @@ def login(request):
         form =LoginForm(request, data=request.POST)
 
         if form.is_valid():
-
             username = request.POST.get("username")
             password = request.POST.get("password")
-
             user = authenticate(request, username = username, password = password)
+
             if user is not None:
                 auth.login(request, user)
-
                 return redirect("index")
-    
-    context = {"loginform":form}
             
+    context = {"loginform":form}
+
     return render(request, "registration/login.html", context=context)
 
 def register(request):
@@ -60,10 +55,8 @@ def register(request):
     
     return render(request, "registration/register.html", context=context)
 
-
 def logout(request):
     auth.logout(request)
-
     return redirect("../login")
 
 @login_required(login_url="../login")
@@ -71,12 +64,14 @@ def agenda(request):
     prj = Projection.objects.all().order_by('start_date')
     dates = prj.values_list('start_date', flat=True).filter(start_date__gte=now().strftime('%Y-%m-%d')).distinct()
     selected_date = now()
+
     if len(dates) > 0:
         selected_date = dates[0]
         if request.GET.get('date',''):
             selected_date = request.GET.get('date','')
-        prj = prj.filter(start_date = selected_date).order_by("time")
+        prj = prj.filter(start_date=selected_date).order_by("time")
         selected_date = prj.first().start_date
+
     return render (
     request,
     "salesAsistant/agenda.html",
@@ -89,14 +84,13 @@ def agenda(request):
 
 @login_required(login_url="../login")
 def projections(request):
-    mv=Movie.objects.get(pk=request.GET.get('id',''))
+    mv = Movie.objects.get(pk=request.GET.get('id',''))
     prj = Projection.objects.all().filter(movie=mv).filter(start_date__gte=now().strftime('%Y-%m-%d')).order_by('start_date')
    
     return render(
         request,
         "common/projections.html",
         context={
-           
             "movie": mv,
             "projections": prj,
             "is_sales_user":is_sales(request.user)
@@ -108,9 +102,9 @@ def projections(request):
 def hall(request):
     prj=Projection.objects.get(pk=request.GET.get('id',''))
     prj.hall_capacity()
-    unavailable = Seat.objects.all().filter(hall = prj.Hall).filter(is_available = False)
+    unavailable = Seat.objects.all().filter(hall = prj.hall).filter(is_available = False)
     taken = Ticket.objects.all().filter(projection = prj).exclude(user__isnull = True)
-    if prj.Hall.type == "big":
+    if prj.hall.type == "big":
         row_count = 10
         row_range = range(10)
         col_range = range(10)
@@ -118,7 +112,7 @@ def hall(request):
         starting_y = 19
         starting_xx = 252
         starting_yy = 72
-    elif prj.Hall.type == "std":
+    elif prj.hall.type == "std":
         row_count = 6
         row_range = range(6)
         col_range = range(10)
@@ -185,11 +179,10 @@ def payment(request):
     seats = json.loads(request.POST.get("seats"))
 
     for s in seats:
-        seat = Seat.objects.get(row = digitToChar(int(s["row"])), col=int(s["col"]), hall=prj.Hall)
+        seat = Seat.objects.get(row = digitToChar(int(s["row"])), col=int(s["col"]), hall=prj.hall)
         payment_method =  s["payment"]
         ticket = Ticket(projection=prj,user=request.user,seat=seat, payment_method = payment_method)
         ticket.save()
-
 
     return render(
          request,
@@ -198,6 +191,7 @@ def payment(request):
             "is_sales_user": is_sales(request.user)
         }
     )
+
 def myTickets(request):
     user_ticket = Ticket.objects.all().filter(user = request.user.id)
 

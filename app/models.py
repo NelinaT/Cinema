@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from . hall_builder import generate_svg
 from  django.contrib.auth.models import User
 import qrcode
+from . utils import row_names
 
 
 capacity_for_hall_types = {
@@ -22,7 +23,6 @@ capacity_for_hall_types = {
     },
 }
 
-row_names = ["A","B", "C","D","E","F","G","H","I","J"]
 
 class Hall(models.Model):
     name = models.CharField(max_length=10)
@@ -42,7 +42,6 @@ class Hall(models.Model):
                     Seat(hall=self, row=row_names[i], col=j+1).save()
             
 
-
 class Seat(models.Model):
     hall = models.ForeignKey(Hall,on_delete=models.CASCADE)
     row = models.CharField(max_length=1)
@@ -51,7 +50,6 @@ class Seat(models.Model):
     
     def __str__(self):
         return self.hall.name + " - row: " + str(self.row) + " col: " + str(self.col)
-    
     
 
 class Movie(models.Model):
@@ -69,28 +67,27 @@ class Projection(models.Model):
     start_date = models.DateField(default=now)
     time = models.TimeField(default=now)
     movie = models.ForeignKey(Movie,on_delete=models.SET_NULL,null=True)
-    Hall = models.ForeignKey(Hall,on_delete=models.SET_NULL,null=True)
+    hall = models.ForeignKey(Hall,on_delete=models.SET_NULL,null=True)
 
     @property
     def price(self):
-        if self.Hall and self.movie:
-            if self.Hall.type == "vip":
+        if self.hall and self.movie:
+            if self.hall.type == "vip":
                 return self.movie.price + 5
-            if self.Hall.type == "std":
+            if self.hall.type == "std":
                 return self.movie.price + 2
-            if self.Hall.type == "big":
+            if self.hall.type == "big":
                 return self.movie.price
         return 0     
 
-
     def hall_capacity(self):
         tickets = Ticket.objects.all().filter(projection=self)
-        seats = Seat.objects.all().filter(hall=self.Hall)
-        if self.Hall.type == "vip":
+        seats = Seat.objects.all().filter(hall=self.hall)
+        if self.hall.type == "vip":
             return generate_svg(f"app/static/app/{self.id}.svg",1000,550, seats, tickets, 8)
-        if self.Hall.type == "std":
+        if self.hall.type == "std":
             return generate_svg(f"app/static/app/{self.id}.svg",1000,600, seats, tickets, 10)
-        if self.Hall.type == "big":
+        if self.hall.type == "big":
             return generate_svg(f"app/static/app/{self.id}.svg",1000,1000, seats, tickets, 10)
 
     def __str__(self):
@@ -101,38 +98,35 @@ class Projection(models.Model):
         return start <= current <= end
     
     def clean(self):
-        all_projections_per_hall = Projection.objects.all().filter(Hall = self.Hall).filter(start_date = self.start_date)
+        all_projections_per_hall = Projection.objects.all().filter(hall = self.hall).filter(start_date = self.start_date)
 
         for projection in all_projections_per_hall:
             duration = projection.movie.duration
             start_time = projection.time
-            end_time = timedelta(hours=start_time.hour ,minutes = start_time.minute) + timedelta(minutes = duration)  + timedelta(minutes=20)
+            end_time = timedelta(hours=start_time.hour ,minutes=start_time.minute) + timedelta(minutes = duration)  + timedelta(minutes=20)
             start_time = timedelta(hours=start_time.hour, minutes=start_time.minute)
-            duration_new=self.movie.duration
+            duration_new = self.movie.duration
             new_time = timedelta(hours=self.time.hour, minutes=self.time.minute)
             new_time_end = timedelta(hours=self.time.hour, minutes=self.time.minute)+ timedelta(minutes = duration_new)  + timedelta(minutes=20)
-            if Projection.time_in_range(start_time , end_time, new_time) or Projection.time_in_range(start_time , end_time, new_time_end):
-                # self.delete()
+           
+            if Projection.time_in_range(start_time, end_time, new_time) or Projection.time_in_range(start_time, end_time, new_time_end):
                 raise ValidationError("There is a projestion in this time")
     
 
 class Ticket(models.Model):
-    
     projection = models.ForeignKey(Projection,on_delete=models.SET_NULL,null=True)
     seat = models.ForeignKey(Seat,on_delete=models.SET_NULL,null=True)
     user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
-    payment_method=models.CharField(max_length=10,null=True)
-    
+    payment_method = models.CharField(max_length=10,null=True)
+
     def qr_generator(self):
         data = {"id":self.id,
                "projection" :self.projection,
                "seat":self.seat,
                "user": self.user,
                "payment_method": self.payment_method
-               
                } 
         img = qrcode.make(data)
-        type(img)  # qrcode.image.pil.PilImage
         path = f"app/ticket_{self.id}.png"
         img.save(f"app/static/app/ticket_{self.id}.png")
         return path

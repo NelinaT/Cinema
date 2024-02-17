@@ -1,7 +1,6 @@
 from svg_turtle import SvgTurtle
+from . utils import row_names_dict
 
-
-row_names = {"A":0,"B":1, "C":2,"D":3,"E":4,"F":5,"G":6,"H":7,"I":8,"J":9}
 
 def is_seat_available(seat, tickets):
     
@@ -22,7 +21,7 @@ def grid_of_seats(seat_width,t,seats, tickets, cols):
     t.penup()
 
     for seat in seats:
-        t.goto(-300 + (seat.col-1)*70, -200 + row_names[seat.row]*70)
+        t.goto(-300 + (seat.col-1)*70, -200 + row_names_dict[seat.row]*70)
         t.pendown()
         if not seat.is_available:
             t.pen(pencolor="black", fillcolor="red", pensize= 1, speed=0)
@@ -30,11 +29,12 @@ def grid_of_seats(seat_width,t,seats, tickets, cols):
             t.pen(pencolor="black", fillcolor="green", pensize= 1, speed=0)
         else:
             t.pen(pencolor="black", fillcolor="gray", pensize= 1, speed=0)
+            
         t.begin_fill()
         parallelogram(seat_width,seat_width,t)
         t.end_fill()
         t.penup()
-        t.goto(-300+(seat.col-1)*70 + 25 ,-200 + row_names[seat.row]*70 +10)
+        t.goto(-300+(seat.col-1)*70 + 25 ,-200 + row_names_dict[seat.row]*70 +10)
         t.write(f"{seat.row}" + f'{seat.col}', align="center", font=('Arial', 15, 'normal'))
 
     t.pen(fillcolor = "black", pensize= 2)
