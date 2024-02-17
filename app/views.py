@@ -207,7 +207,6 @@ def myTickets(request):
         context={
             "user_tickets":user_ticket,
             "is_sales_user":is_sales(request.user)
-            # "img" : img
         }
     )
 

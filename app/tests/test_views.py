@@ -246,3 +246,46 @@ class agendaTest(TestCase):
             response.context["selected_date"],
             prj.start_date
         )
+
+class projectionsTest(TestCase):
+    def test_projections(self):
+        self.user = User.objects.create_user(username='testuser', password='12345')
+        login = self.client.login(username='testuser', password='12345')
+        
+        hall= create_hall("vip","vip")
+        movie = create_movie("IT",130,"horror","...", 10)
+        movie2 = create_movie("Bad boys",130,"horror","...", 10)
+
+        param={
+            "start_date":datetime.date(2024, 2, 19),
+            "time": datetime.time(17,30),
+            "movie": movie,
+            "hall":hall
+            }
+        param2={
+            "start_date":datetime.date(2024, 2, 29),
+            "time": datetime.time(22,30),
+            "movie": movie,
+            "hall":hall
+            }
+        param3={
+            "start_date":datetime.date(2024, 2, 19),
+            "time": datetime.time(22,30),
+            "movie": movie2,
+            "hall":hall
+            }
+        prj= create_Projection(param)
+        prj2= create_Projection(param2)
+        prj3= create_Projection(param3)
+
+        response = self.client.get('/projections', {'id': 1})
+
+        self.assertQuerySetEqual(
+            response.context["projections"],
+            [prj, prj2],
+        )
+        response = self.client.get('/projections', {'id': 2})
+        self.assertQuerySetEqual(
+            response.context["projections"],
+            [prj3],
+        )
