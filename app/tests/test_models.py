@@ -1,7 +1,8 @@
 from django.test import TestCase
-from app.models import Movie, Hall, Projection
+from app.models import Movie, Hall, Projection, Seat, Ticket
 import datetime
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 
 class ProjectionTests(TestCase):
     case_1 = {  
@@ -26,21 +27,21 @@ class ProjectionTests(TestCase):
     }
     
     case_4 = { 
-        "start_date":datetime.date(2024, 2, 19),
+        "start_date": datetime.date(2024, 2, 19),
         "time": datetime.time(17,30),
-        "movie":Movie.objects.get(pk=46),
+        "movie": Movie.objects.get(pk=46),
         "hall": case_1["hall"]
     }
     case_5 = { 
-        "start_date":datetime.date(2024, 2, 19),
+        "start_date": datetime.date(2024, 2, 19),
         "time": datetime.time(19,15),
-        "movie":Movie.objects.get(pk=47),
+        "movie": Movie.objects.get(pk=47),
         "hall": case_1["hall"]
     }
     case_6 = { 
-        "start_date":datetime.date(2024, 2, 19),
+        "start_date": datetime.date(2024, 2, 19),
         "time": datetime.time(17,15),
-        "movie":Movie.objects.get(pk=48),
+        "movie": Movie.objects.get(pk=48),
         "hall": case_1["hall"]
     }
 
@@ -83,14 +84,3 @@ class ProjectionTests(TestCase):
         prj5 = ProjectionTests.create_Projection(self, self.case_6)
         self.assertRaises(ValidationError,prj5.clean)
 
-
-
-
-
-
-
-
-
-
-
-   
