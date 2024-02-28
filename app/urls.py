@@ -10,5 +10,5 @@ urlpatterns = [
     path("projections", views.projections, name="projections"),
     path("hall", views.hall, name="hall"),
     path("success_payment", views.payment, name="payment"),
-    path("myTickets", views.myTickets, name="myTickets")
+    path("my_tickets", views.my_tickets, name="my_tickets")
 ]
