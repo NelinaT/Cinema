@@ -13,10 +13,10 @@ def create_movie(name, duration, genre, img_url, price):
     return Movie.objects.create(name=name, duration=duration, genre=genre, img_url=img_url, price=price)
 
 def create_hall(name, type):
-     return Hall.objects.create(name=name, type=type)
+    return Hall.objects.create(name=name, type=type)
 
 def create_Projection(param):
-    return  Projection.objects.create(start_date=param["start_date"], time=param["time"], movie=param["movie"], hall=param['hall'])
+    return Projection.objects.create(start_date=param["start_date"], time=param["time"], movie=param["movie"], hall=param['hall'])
 
 
 class indexTest(TestCase):
@@ -43,8 +43,8 @@ class indexTest(TestCase):
 
         self.assertQuerySetEqual(
             response.context["movies"],
-            [movie3,movie2, movie],
-            ordered=False
+            [movie3, movie2, movie],
+            ordered = False
         )
     
 
@@ -82,15 +82,15 @@ class agendaTest(TestCase):
         self.user.groups.add(self.group)
         login = self.client.login(username='testuser', password='12345')
         
-        hall= create_hall("vip","vip")
+        hall = create_hall("vip","vip")
         movie = create_movie("IT",130,"horror","...", 10)
-        param={
+        param = {
             "start_date":datetime.date(2024, 2, 19),
             "time": datetime.time(17,30),
             "movie": movie,
             "hall":hall
             }
-        prj=create_Projection(param)
+        prj = create_Projection(param)
         url = reverse("agenda")
         response = self.client.get(url)
 
@@ -113,13 +113,13 @@ class agendaTest(TestCase):
         
         hall= create_hall("vip","vip")
         movie = create_movie("IT",130,"horror","...", 10)
-        param={
+        param = {
             "start_date":datetime.date(2024, 2, 19),
             "time": datetime.time(17,30),
             "movie": movie,
             "hall":hall
             }
-        param2={
+        param2 = {
             "start_date":datetime.date(2024, 2, 19),
             "time": datetime.time(22,30),
             "movie": movie,
@@ -151,15 +151,15 @@ class agendaTest(TestCase):
         self.user.groups.add(self.group)
         login = self.client.login(username='testuser', password='12345')
         
-        hall= create_hall("vip","vip")
+        hall = create_hall("vip","vip")
         movie = create_movie("IT",130,"horror","...", 10)
-        param={
+        param = {
             "start_date":datetime.date(2024, 2, 19),
             "time": datetime.time(17,30),
             "movie": movie,
             "hall":hall
             }
-        param2={
+        param2 = {
             "start_date":datetime.date(2024, 2, 29),
             "time": datetime.time(22,30),
             "movie": movie,
@@ -191,21 +191,21 @@ class agendaTest(TestCase):
         self.user.groups.add(self.group)
         login = self.client.login(username='testuser', password='12345')
         
-        hall= create_hall("vip","vip")
+        hall = create_hall("vip","vip")
         movie = create_movie("IT",130,"horror","...", 10)
-        param={
+        param = {
             "start_date":datetime.date(2024, 2, 19),
             "time": datetime.time(17,30),
             "movie": movie,
             "hall":hall
             }
-        param2={
+        param2 = {
             "start_date":datetime.date(2024, 2, 29),
             "time": datetime.time(22,30),
             "movie": movie,
             "hall":hall
             }
-        param3={
+        param3 = {
             "start_date":datetime.date(2024, 2, 19),
             "time": datetime.time(22,30),
             "movie": movie,
@@ -243,23 +243,23 @@ class projectionsTest(TestCase):
         movie = create_movie("IT",130,"horror","...", 10)
         movie2 = create_movie("Bad boys",130,"horror","...", 10)
 
-        param={
-            "start_date":datetime.date(2024, 2, 19),
+        param = {
+            "start_date": datetime.date(2024, 2, 19),
             "time": datetime.time(17,30),
             "movie": movie,
-            "hall":hall
+            "hall": hall
             }
-        param2={
-            "start_date":datetime.date(2024, 2, 29),
+        param2 = {
+            "start_date": datetime.date(2024, 2, 29),
             "time": datetime.time(22,30),
             "movie": movie,
-            "hall":hall
+            "hall": hall
             }
         param3={
-            "start_date":datetime.date(2024, 2, 19),
+            "start_date": datetime.date(2024, 2, 19),
             "time": datetime.time(22,30),
             "movie": movie2,
-            "hall":hall
+            "hall": hall
             }
         prj = create_Projection(param)
         prj2 = create_Projection(param2)

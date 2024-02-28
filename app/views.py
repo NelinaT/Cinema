@@ -18,18 +18,18 @@ def index(request):
     return render(
         request,
         "common/index.html",
-        context={"movies": Movies, "is_sales_user":is_sales(request.user)}
+        context={"movies": Movies, "is_sales_user": is_sales(request.user)}
     )
 
 def login(request):
     form = LoginForm()
     if request.method == "POST":
-        form =LoginForm(request, data=request.POST)
+        form = LoginForm(request, data=request.POST)
 
         if form.is_valid():
             username = request.POST.get("username")
             password = request.POST.get("password")
-            user = authenticate(request, username = username, password = password)
+            user = authenticate(request, username=username, password=password)
 
             if user is not None:
                 auth.login(request, user)
@@ -73,13 +73,13 @@ def agenda(request):
         selected_date = prj.first().start_date
 
     return render (
-    request,
-    "salesAsistant/agenda.html",
-    context={
-        "selected_date":selected_date,
-        "dates": dates,
-        "projections": prj ,
-        "is_sales_user":is_sales(request.user)
+        request,
+        "salesAsistant/agenda.html",
+        context={
+            "selected_date": selected_date,
+            "dates": dates,
+            "projections": prj ,
+            "is_sales_user": is_sales(request.user)
     })
 
 @login_required(login_url="../login")
@@ -100,10 +100,11 @@ def projections(request):
 @login_required(login_url="../login")
 @requires_csrf_token
 def hall(request):
-    prj=Projection.objects.get(pk=request.GET.get('id',''))
+    prj = Projection.objects.get(pk=request.GET.get('id',''))
     prj.hall_capacity()
-    unavailable = Seat.objects.all().filter(hall = prj.hall).filter(is_available = False)
-    taken = Ticket.objects.all().filter(projection = prj).exclude(user__isnull = True)
+    unavailable = Seat.objects.all().filter(hall=prj.hall).filter(is_available=False)
+    taken = Ticket.objects.all().filter(projection=prj).exclude(user__isnull=True)
+
     if prj.hall.type == "big":
         row_count = 10
         row_range = range(10)
@@ -167,7 +168,7 @@ def hall(request):
                       "price": prj.price,
                       "coords" : coords_list,
                       "projection": prj,
-                      "is_sales_user":is_sales(request.user)
+                      "is_sales_user": is_sales(request.user)
 
                     }
                 )
@@ -179,9 +180,9 @@ def payment(request):
     seats = json.loads(request.POST.get("seats"))
 
     for s in seats:
-        seat = Seat.objects.get(row = digitToChar(int(s["row"])), col=int(s["col"]), hall=prj.hall)
-        payment_method =  s["payment"]
-        ticket = Ticket(projection=prj,user=request.user,seat=seat, payment_method = payment_method)
+        seat = Seat.objects.get(row=digitToChar(int(s["row"])), col=int(s["col"]), hall=prj.hall)
+        payment_method = s["payment"]
+        ticket = Ticket(projection=prj, user=request.user, seat=seat, payment_method=payment_method)
         ticket.save()
 
     return render(
@@ -192,12 +193,12 @@ def payment(request):
         }
     )
 
-def myTickets(request):
-    user_ticket = Ticket.objects.all().filter(user = request.user.id)
+def my_tickets(request):
+    user_ticket = Ticket.objects.all().filter(user=request.user.id)
 
     return render(
          request,
-        "common/myTickets.html",
+        "common/my_tickets.html",
         context={
             "user_tickets":user_ticket,
             "is_sales_user":is_sales(request.user)
