@@ -56,6 +56,44 @@ Now as you are logged in you can do many stuff:
     - Here you can see all your tickets:
     - ![image](https://github.com/NelinaT/Cinema/assets/90975870/25b5f115-21ad-45c7-8175-7c2ad17acf70)
 
+ So this are the funtionalities grom a Customer profile;
+
+ Now lets see what you can do with stuff profile:
+1. Only the admin can give stuff status to the accounts.
+2. For admin role it is basically the same with a few differences:
+  - they are suposed to sell the tickets phisicaly at the cinema, so their priorities are mainly the upcoming projections. That's why they do not see details about the movies. They see the program for the upcomming projections filtered by day and ordered by hours.
+  - ![image](https://github.com/NelinaT/Cinema/assets/90975870/922afa1e-4ecc-4823-b4a8-5a4c3a48dbfa)
+  - They have access to admin account but only view mode:
+    ![image](https://github.com/NelinaT/Cinema/assets/90975870/d24d3eb0-dc58-4725-9ee3-5a2c67b252e7)
+
+Admin account:
+The Admin can in the site has the same rules as the Customer, but he has a full access to the admin panel and can make changes there;
+He can:
+  -creat hall and change it's name and type
+  
+  ![image](https://github.com/NelinaT/Cinema/assets/90975870/f2c8b608-3646-4055-9ac3-f026ea3c1e2c)
+
+  - creat movies and change it's properties
+
+    ![image](https://github.com/NelinaT/Cinema/assets/90975870/d497db7d-a65e-4c8c-8be2-b7a0fb37a7e3)
+
+  - creat projections and change it's properties
+
+    ![image](https://github.com/NelinaT/Cinema/assets/90975870/9e4551b3-5be9-4aa4-b682-190b2b9d5371)
+    
+  -  block them if they shouldn't be used
+    ![image](https://github.com/NelinaT/Cinema/assets/90975870/934d9e6a-38b1-4ec5-b26a-c567af9114e9)
+
+  - creat grops and gives roles to the users
+
+    ![image](https://github.com/NelinaT/Cinema/assets/90975870/f1d60ee1-90b2-4624-83c0-c6df9f9aae31)
+
+
+
+
+
+
+
 
 
 
