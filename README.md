@@ -91,16 +91,27 @@ He can:
 Implemented rules:
 1. When creating a hall, the seats are automaticaly created, according to what tyoe is the hall.
 2. When creating a projection:
-  - admin can't creat a projection if there is another one at this time and hall
-  - admin can't creat a projection if the movie in that hall did not finished
-  - admin can't creat a projection if the new projection ends during another projection in this hall
-  - admin can't creat a projection if there are less than 20 minutes before or after another projection
+    - admin can't creat a projection if there is another one at this time and hall
+    - admin can't creat a projection if the movie in that hall did not finished
+    - admin can't creat a projection if the new projection ends during another projection in this hall
+    - admin can't creat a projection if there are less than 20 minutes before or after another projection
     
 3. The page "Agenda":
    - is vissible only for people with role "Sales"
    - the program is ordered by the time of the projections per each day
      
 4. The images of the seats in the hall are clickable when they can be booked and not if they are taken or broken
+5. All tickets have unique QR codes that consist detail about there projection such as name of movie, hall, time, seat etc...
+
+Technoligies:
+  - Python + Django
+  - SQLite
+  - Front-end(html, css, bootstrap, js, jQuery)
+  - additional modules acording to the needs of the project
+
+Additional Notes:
+ - I created the seats with Python Turtle, insted with frontend tecgologies,because this project is from a University course about Python and I wanted to show that I can do it with it.   
+
     
 
 
