@@ -88,7 +88,20 @@ He can:
 
     ![image](https://github.com/NelinaT/Cinema/assets/90975870/f1d60ee1-90b2-4624-83c0-c6df9f9aae31)
 
-
+Implemented rules:
+1. When creating a hall, the seats are automaticaly created, according to what tyoe is the hall.
+2. When creating a projection:
+  - admin can't creat a projection if there is another one at this time and hall
+  - admin can't creat a projection if the movie in that hall did not finished
+  - admin can't creat a projection if the new projection ends during another projection in this hall
+  - admin can't creat a projection if there are less than 20 minutes before or after another projection
+    
+3. The page "Agenda":
+   - is vissible only for people with role "Sales"
+   - the program is ordered by the time of the projections per each day
+     
+4. The images of the seats in the hall are clickable when they can be booked and not if they are taken or broken
+    
 
 
 
