@@ -68,13 +68,17 @@ Now that you are logged in, you can do many things:
     - You will be able to see all your purchased tickets in this section.
     - ![image](https://github.com/NelinaT/Cinema/assets/90975870/25b5f115-21ad-45c7-8175-7c2ad17acf70)
 
- So this are the funtionalities grom a Customer profile;
+So these are the functionalities from customer profile.
 
  Now lets see what you can do with stuff profile:
 1. Only the admin can give stuff status to the accounts.
 2. For admin role it is basically the same with a few differences:
-  - they are suposed to sell the tickets phisicaly at the cinema, so their priorities are mainly the upcoming projections. That's why they do not see details about the movies. They see the program for the upcomming projections filtered by day and ordered by hours.
-  - ![image](https://github.com/NelinaT/Cinema/assets/90975870/922afa1e-4ecc-4823-b4a8-5a4c3a48dbfa)
+  - they are suposed to sell the tickets physically at the cinema, so their priorities are mainly the upcoming projections.
+    That's why they do not see details about the movies.
+    They see the program for the upcomming projections filtered by day and ordered by hours.
+    
+   ![image](https://github.com/NelinaT/Cinema/assets/90975870/922afa1e-4ecc-4823-b4a8-5a4c3a48dbfa)
+   
   - They have access to admin account but only view mode:
     ![image](https://github.com/NelinaT/Cinema/assets/90975870/d24d3eb0-dc58-4725-9ee3-5a2c67b252e7)
 
@@ -94,7 +98,8 @@ He can:
     ![image](https://github.com/NelinaT/Cinema/assets/90975870/9e4551b3-5be9-4aa4-b682-190b2b9d5371)
     
   -  block them if they shouldn't be used
-    ![image](https://github.com/NelinaT/Cinema/assets/90975870/934d9e6a-38b1-4ec5-b26a-c567af9114e9)
+     
+     [image](https://github.com/NelinaT/Cinema/assets/90975870/934d9e6a-38b1-4ec5-b26a-c567af9114e9)
 
   - creat grops and gives roles to the users
 
@@ -113,7 +118,7 @@ Implemented rules:
    - the program is ordered by the time of the projections per each day
      
 4. The images of the seats in the hall are clickable when they can be booked and not if they are taken or broken
-5. All tickets have unique QR codes that consist detail about there projection such as name of movie, hall, time, seat etc...
+5. All tickets have unique QR codes that consist details about the projection such as name of movie, hall, time, seat etc...
 
 Technoligies:
   - Python + Django
