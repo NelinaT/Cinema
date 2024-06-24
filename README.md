@@ -134,7 +134,7 @@ Technoligies:
   - additional modules acording to the needs of the project
 
 Additional Notes:
- - I created the seats with Python Turtle, instead of with frontend technologies, because this project is from a University course about Python and I wanted to show that I can do it with it.
+ - I used Python Turtle to create the seats instead of frontend technologies because this project is part of a University course on Python, and I wanted to demonstrate my skills with Python.
 
     
 
