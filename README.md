@@ -83,7 +83,8 @@ So these are the functionalities from customer profile.
     ![image](https://github.com/NelinaT/Cinema/assets/90975870/d24d3eb0-dc58-4725-9ee3-5a2c67b252e7)
 
 Admin account:
-The Admin can in the site has the same rules as the Customer, but he has a full access to the admin panel and can make changes there;
+
+The Admin has the same rules as the Customer, but he has a full access to the admin panel and can make changes there;
 He can:
   -creat hall and change it's name and type
   
@@ -97,28 +98,32 @@ He can:
 
     ![image](https://github.com/NelinaT/Cinema/assets/90975870/9e4551b3-5be9-4aa4-b682-190b2b9d5371)
     
-  -  block them if they shouldn't be used
+  -  block seats if they shouldn't be used
      
      [image](https://github.com/NelinaT/Cinema/assets/90975870/934d9e6a-38b1-4ec5-b26a-c567af9114e9)
 
-  - creat grops and gives roles to the users
+  - creat groups and gives roles to the users
 
     ![image](https://github.com/NelinaT/Cinema/assets/90975870/f1d60ee1-90b2-4624-83c0-c6df9f9aae31)
 
 Implemented rules:
-1. When creating a hall, the seats are automaticaly created, according to what tyoe is the hall.
-2. When creating a projection:
-    - admin can't creat a projection if there is another one at this time and hall
-    - admin can't creat a projection if the movie in that hall did not finished
-    - admin can't creat a projection if the new projection ends during another projection in this hall
-    - admin can't creat a projection if there are less than 20 minutes before or after another projection
+1. Hall Creation:
+     - Seats are automatically created according to the type of the hall.
+3. Projection Creation:
+    - An admin cannot create a projection if there is another one scheduled at the same time and in the same hall.
+    - An admin cannot create a projection if the previous movie in that hall has not finished before the start of the new one.
+    - An admin cannot create a projection if the new projection ends during another projection in the same hall.
+    - An admin cannot create a projection if there are less than 20 minutes before or after another projection in the same hall.
     
-3. The page "Agenda":
-   - is vissible only for people with role "Sales"
-   - the program is ordered by the time of the projections per each day
+4. Agenda Page:
+   - Visible only to users with the "Sales" role.
+   - The program is ordered by the time of the projections for each day.
      
-4. The images of the seats in the hall are clickable when they can be booked and not if they are taken or broken
-5. All tickets have unique QR codes that consist details about the projection such as name of movie, hall, time, seat etc...
+5. Seat Images:
+       - Seats are clickable when they can be booked.
+       - Seats are not clickable if they are taken or broken.
+   
+7. All tickets have unique QR codes that contain details about the projection, such as the name of the movie, hall, time, seat, etc.
 
 Technoligies:
   - Python + Django
