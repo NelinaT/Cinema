@@ -120,8 +120,10 @@ Implemented rules:
    - The program is ordered by the time of the projections for each day.
      
 5. Seat Images:
-       - Seats are clickable when they can be booked.
-       - Seats are not clickable if they are taken or broken.
+
+    - Seats are clickable when they can be booked.
+   
+    - Seats are not clickable if they are taken or broken.
    
 7. All tickets have unique QR codes that contain details about the projection, such as the name of the movie, hall, time, seat, etc.
 
