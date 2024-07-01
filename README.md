@@ -7,7 +7,7 @@ HOW TO RUN IT:
 All you need to do is download the code:
     [git clone ](https://github.com/NelinaT/Cinema.git)
 
-Open the terminal in you resporistory and run the following command in the terminal:
+Open the terminal in your resporistory and run the following command in the terminal:
     
     pip install -r requirements.txt
 
