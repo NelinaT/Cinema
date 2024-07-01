@@ -6,7 +6,7 @@ HOW TO RUN IT:
 
 All you need to do is download the code and run the following command in the terminal:
 
-    ~python manage.py runserver~
+    python manage.py runserver
 
 Then the site will operate on localhost:8000.
 
