@@ -4,7 +4,14 @@ Depending on their role, users can log in as admin, staff, or clients.
 
 HOW TO RUN IT:
 
-All you need to do is download the code and run the following command in the terminal:
+All you need to do is download the code:
+    [git clone ](https://github.com/NelinaT/Cinema.git)
+
+Open the terminal in you resporistory and run the following command in the terminal:
+    
+    pip install -r requirements.txt
+
+Start your project:
 
     python manage.py runserver
 
